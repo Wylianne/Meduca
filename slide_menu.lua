@@ -8,9 +8,9 @@ function slideMenuClose(event)
     if (event.phase == "ended") then
         transition.to(menu, {time=400, x = menu.x - display.actualContentWidth/2})
         transition.to(menu_close, {time=400, x = menu_close.x - display.actualContentWidth/2}) 
-        transition.to(logo, {time=400, x = logo.x - display.actualContentWidth/2}) 
-        transition.to(opcMenuSugestoes, {time=400, x = opcMenuSugestoes.x - display.actualContentWidth/2}) 
-        transition.to(opcMenuSair, {time=400, x = opcMenuSair.x - display.actualContentWidth/2}) 
+        --transition.to(logo, {time=400, x = logo.x - display.actualContentWidth/2}) 
+        --transition.to(opcMenuSugestoes, {time=400, x = opcMenuSugestoes.x - display.actualContentWidth/2}) 
+        --transition.to(opcMenuSair, {time=400, x = opcMenuSair.x - display.actualContentWidth/2}) 
 
 
         menuActive = false
@@ -26,10 +26,10 @@ end
 function slide_menu:onMenuTouch()
     if (menuActive == false) then
             
-        menu = display.newRect( 0, 0, display.actualContentWidth/2, display.actualContentHeight )
+        menu = display.newImageRect( "menu_principal/menu.png", display.actualContentWidth/2, display.actualContentHeight )
         menu.y = display.contentCenterY
         menu.x = -80
-        menu:setFillColor(0.2,0.4,0.6)
+        --menu:setFillColor(0.2,0.4,0.6)
 
         menu_close = display.newImageRect( "slide_menu/close.png", 25, 25 )
         menu_close.x = -20
@@ -52,9 +52,9 @@ function slide_menu:onMenuTouch()
 
         transition.to(menu, {time=400, x = menu.x + display.actualContentWidth/2})
         transition.to(menu_close, {time=400, x = menu_close.x + display.actualContentWidth/2})
-        transition.to(logo, {time=400, x = logo.x + display.actualContentWidth/2})
-        transition.to(opcMenuSugestoes, {time=400, x = opcMenuSugestoes.x + display.actualContentWidth/2})
-        transition.to(opcMenuSair, {time=400, x = opcMenuSair.x + display.actualContentWidth/2})
+        --transition.to(logo, {time=400, x = logo.x + display.actualContentWidth/2})
+        --transition.to(opcMenuSugestoes, {time=400, x = opcMenuSugestoes.x + display.actualContentWidth/2})
+        --transition.to(opcMenuSair, {time=400, x = opcMenuSair.x + display.actualContentWidth/2})
 
 
         menuActive = true

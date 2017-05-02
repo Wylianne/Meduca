@@ -87,8 +87,29 @@ function login:create(event)
                                     330, 
                                     180, 
                                     20 )
+
     fieldPass.isSecure = true
     SceneGroup:insert(fieldPass)
+
+    textLoginWith = display.newText("Entrar com", display.contentCenterX, display.contentCenterY * 1.8 )
+    textLoginWith:setFillColor(0,0,0)
+    SceneGroup:insert(textLoginWith)
+
+    loginFacebook = display.newImageRect("tela_login/facebook.png", 40, 40)
+    loginFacebook.x = display.contentCenterX - display.contentCenterX / 2 
+    loginFacebook.y = display.contentCenterY * 2
+    SceneGroup:insert(loginFacebook)
+
+
+    loginGoogle = display.newImageRect("tela_login/google.png", 40, 40)
+    loginGoogle.x = display.contentCenterX
+    loginGoogle.y = display.contentCenterY * 2
+    SceneGroup:insert(loginGoogle)
+
+    loginTwitter = display.newImageRect("tela_login/twitter.png", 45, 40)
+    loginTwitter.x = display.contentCenterX + display.contentCenterX / 2 
+    loginTwitter.y = display.contentCenterY * 2
+    SceneGroup:insert(loginTwitter)
 
 
 end

@@ -63,7 +63,7 @@ function geraButtons()
             --    onEvent = viewFieldsEvent
             
         })
-        btnCorrigir.x = display.contentCenterX - 95
+        btnCorrigir.x = display.contentCenterX - 92
         btnCorrigir.y = display.contentCenterY*2
         SceneGroup:insert(btnCorrigir)
 
@@ -82,7 +82,7 @@ function geraButtons()
             --    onEvent = viewFieldsEvent
             
         })
-        btnNext.x = display.contentCenterX + 95
+        btnNext.x = display.contentCenterX + 92
         btnNext.y = display.contentCenterY*2
         SceneGroup:insert(btnNext)
 
@@ -98,7 +98,7 @@ local function radioButtons()
         local radioButton1 = widget.newSwitch(
             {
                 left = 20,
-                top = 130 + (i*49),
+                top = 140 + (i*49),
                 style = "radio",
                 id = i,
                 width = 280,
@@ -113,8 +113,8 @@ local function radioButtons()
         radioGroup:insert( radioButton1 )
         SceneGroup:insert(radioButton1)
 
-        local alterViewOpc = display.newText(alterViewOpc[i], 45, 153+(i*50), native.systemFont, 25 )
-        local alterView = display.newText(alter[i], 80, 143+(i*50), native.systemFont, 18 )
+        local alterViewOpc = display.newText(alterViewOpc[i], 45, 163+(i*50), native.systemFont, 22 )
+        local alterView = display.newText(alter[i], 80, 153+(i*50), native.systemFont, 18 )
         alterView.anchorX, alterView.anchorY = 0, 0
         SceneGroup:insert(alterViewOpc)
         SceneGroup:insert(alterView)
@@ -159,9 +159,9 @@ function quiz:create(event)
     --barPergunta:setFillColor(0.2,0.4,0.6, 0.9)
     --barPergunta:setFillColor(0.5,0.6,1, 0.4)
     
-    local barPergunta = display.newImageRect("menu_principal/quiz_pergunta.png",280,170)
+    local barPergunta = display.newImageRect("img_jogos/quiz_pergunta.png",280,170)
     barPergunta.x = display.contentCenterX
-    barPergunta.y = display.contentCenterY / 3
+    barPergunta.y = display.contentCenterY / 3 + 5
     SceneGroup:insert(barPergunta)
 
     local options = {
@@ -170,7 +170,7 @@ function quiz:create(event)
        y = barPergunta.y,
        font = native.systemFont,
        fontSize = 18,
-       width = barPergunta.width,
+       width = barPergunta.width - 20,
        align = "center"
     }
     local textPergunta = display.newText(options)
