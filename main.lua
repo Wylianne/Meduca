@@ -8,6 +8,6 @@
 
 
 local composer = require( "composer" )
-composer.gotoScene("login")
+composer.gotoScene("cruzadas_f1")
 --composer.gotoScene("menuPrincipal")
 --composer.gotoScene("quebra_ossos")
