@@ -69,12 +69,41 @@ function menuPrincipal:create(event)
     local media = display.newText("7", 80, 45)
     media.x = display.contentCenterX
 
+    local soma_ossos = display.newImageRect( "menu_principal/soma_ossos.png", 70, 70 )
+    soma_ossos.x = display.contentCenterX - 100
+    soma_ossos.y = 150
+    SceneGroup:insert(soma_ossos)
+    soma_ossos:addEventListener("touch", goToSomaOssos)
 
-    local palavras_cruzadas = display.newImageRect( "menu_principal/lab.png", 70, 70 )
+    local palavras_cruzadas = display.newImageRect( "menu_principal/palavras_cruzadas.png", 70, 70 )
     palavras_cruzadas.x = display.contentCenterX
     palavras_cruzadas.y = 150
-    SceneGroup:insert(palavras_cruzadas) 
+    SceneGroup:insert(palavras_cruzadas)  
+    palavras_cruzadas:addEventListener("touch", goToPalavrasCruzadas)  
+
+    local quebra_ossos = display.newImageRect( "menu_principal/quebra_ossos.png", 70, 70 )
+    quebra_ossos.x = display.contentCenterX + 100
+    quebra_ossos.y = 150
+    SceneGroup:insert(quebra_ossos)
+    quebra_ossos:addEventListener("touch", goToQuebraOssos)
+
+    local quiz = display.newImageRect( "menu_principal/quiz.png", 70, 70 )
+    quiz.x = display.contentCenterX - 100
+    quiz.y = 250
+    SceneGroup:insert(quiz)
+    quiz:addEventListener("touch", goToQuiz)
+
+    local tiroAlvo = display.newImageRect( "menu_principal/alvo.png", 70, 70 )
+    tiroAlvo.x = display.contentCenterX
+    tiroAlvo.y = 250
+    SceneGroup:insert(tiroAlvo)
+    tiroAlvo:addEventListener("touch", goToTiroAlvo)
     
+    
+    local palavras_cruzadas = display.newImageRect( "menu_principal/lab.png", 70, 70 )
+    palavras_cruzadas.x = display.contentCenterX + 100
+    palavras_cruzadas.y = 250
+    SceneGroup:insert(palavras_cruzadas) 
     
 
 end

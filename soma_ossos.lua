@@ -17,6 +17,14 @@ function backMenu(event)
     end
 end
 
+function goToFase(event)
+    if (event.phase == "ended") then
+        if (event.target.id == 1) then
+            composer.gotoScene("somaOssos.faseUm")
+        end
+    end
+end
+
 function geraFases()
     iniFase = display.contentCenterX - 100
     yFaseB = 70
@@ -54,7 +62,9 @@ function geraFases()
             faseFront.y = yFaseF
             faseFront.x = iniFase
             faseFront.strokeWidth = 3
+            faseFront.id = i
             faseFront:setStrokeColor( 1, 1, 0 )
+            faseFront:addEventListener("touch", goToFase)
             SceneGroup:insert(faseFront)
 
 
