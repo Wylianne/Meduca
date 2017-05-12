@@ -10,8 +10,7 @@ local String = require("string")
 palavraReal = "ÍSQUIO" --ate 10 letras
 palavra = "ISQUIO" --12letras
 dicas = {"É um osso", "Localizado em uma das extremidades", "Localizado na extremidade inferior"}
-erroLetra = 0
-valueDica = 0
+
 
 local function geraEsqueleto ()
     local tornadoData = { width=70, height=183, numFrames=33, sheetContentWidth=2310, sheetContentHeight=183 }
@@ -40,6 +39,9 @@ local function geraEsqueleto ()
     elseif (erroLetra == 6) then
         myAnimation:removeSelf()
         sequenceData = {name="seq1", sheet=tornado, start=29, count=5, time=400, loopCount=1 }
+
+
+        timer.performWithDelay( 2000,telaDerrota)
     end
 
                  
@@ -124,7 +126,6 @@ end
 function changeScore (tipo)
     if (tonumber(scorePoint.text) == 16) then
         scorePoint.text = "0"
-        --chama Tela de Derrota
     elseif (tonumber(scorePoint.text) > 0) then
         scorePoint.text = tonumber(scorePoint.text) - 12
        
@@ -138,9 +139,12 @@ end
 function viewLabelEvent (event)
     if (event.phase == "ended") then
         --local alert = native.showAlert( "Corona", event.target.id, { "OK", "Learn More" }, onComplete )
-        change = 0
-        valida(event.target.id)
-        event.target:removeSelf()
+        print(scorePoint.text)
+        if (scorePoint.text ~= "0") then
+            change = 0
+            valida(event.target.id)
+            event.target:removeSelf()
+        end
         
     end
 end
@@ -233,9 +237,89 @@ function  montaAlfabeto()
     end
 end
 
+function telaDerrota()
+
+    myAnimation:removeSelf()
+
+    derrota = display.newImageRect( "img_jogos/derrota.png", 250, 350)
+    derrota.x = display.contentCenterX
+    derrota.y = display.contentCenterY
+    SceneGroup:insert(derrota)
+
+    local jogarNovamente = widget.newButton({
+        left = 120,
+        top = 310,   
+        label = "Jogar Novamente",
+        shape = "roundedRect",
+        width = 150,
+        height = 25,
+        cornerRadius = 5,
+        labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 0, 0.5 } },
+        fillColor = { default={0,0.4,1,1}, over={0,0.2,0.9,1} },
+        strokeColor = { default={1,0,0,1}, over={0.8,0.8,1,1} },
+        strokeWidth = 0,
+        onEvent = novoJogo
+        
+    })
+
+    jogarNovamente.x = display.contentCenterX
+    jogarNovamente.y = display.contentCenterY*1.6
+    SceneGroup:insert(jogarNovamente)
+
+    scoreFinal = display.newText(tostring(scorePoint.text), 300, 200, native.systemFont, 30)
+    scoreFinal.x = display.contentCenterX * 1.1
+    scoreFinal.y = display.contentCenterY * 1.32
+    SceneGroup:insert(scoreFinal)
+end
+
+function telaVitoria()
+
+    myAnimation:removeSelf()
+
+    derrota = display.newImageRect( "img_jogos/vitoria.png", 250, 350)
+    derrota.x = display.contentCenterX
+    derrota.y = display.contentCenterY
+    SceneGroup:insert(derrota)
+
+    local jogarNovamente = widget.newButton({
+        left = 120,
+        top = 310,   
+        label = "Jogar Novamente",
+        shape = "roundedRect",
+        width = 150,
+        height = 25,
+        cornerRadius = 5,
+        labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 0, 0.5 } },
+        fillColor = { default={0,0.4,1,1}, over={0,0.2,0.9,1} },
+        strokeColor = { default={1,0,0,1}, over={0.8,0.8,1,1} },
+        strokeWidth = 0,
+            onEvent = viewFieldsEvent
+        
+    })
+
+    jogarNovamente.x = display.contentCenterX
+    jogarNovamente.y = display.contentCenterY*1.6
+    SceneGroup:insert(jogarNovamente)
+
+    scoreFinal = display.newText(tostring(scorePoint.text), 300, 200, native.systemFont, 30)
+    scoreFinal.x = display.contentCenterX * 1.1
+    scoreFinal.y = display.contentCenterY * 1.32
+    SceneGroup:insert(scoreFinal)
+end
+
+function novoJogo(event)
+    quebraOssos:destroy()
+end
+
 function quebraOssos:create(event)
+end
+
+function quebraOssos:show(event)
     SceneGroup = self.view
     
+    erroLetra = 0
+    valueDica = 0
+
     local background = display.newImageRect( "menu_principal/fundo_menu1.png", 360, 570 )
     background.x = display.contentCenterX
     background.y = display.contentCenterY
@@ -280,5 +364,14 @@ function quebraOssos:create(event)
 
 end
 
-quebraOssos:addEventListener("create", quebraOssos)
+
+function quebraOssos:destroy(event)
+    quebraOssos:show()
+end
+
+quebraOssos:addEventListener( "create", quebraOssos )
+quebraOssos:addEventListener( "show", quebraOssos )
+quebraOssos:addEventListener( "hide", quebraOssos )
+quebraOssos:addEventListener( "destroy", quebraOssos )
+
 return quebraOssos

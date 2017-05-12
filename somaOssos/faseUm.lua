@@ -9,6 +9,24 @@ totalRespostas = 2
 iResposta=1
 posicaoResposta = {}
 
+--Inicializa ossos
+osso = {
+    {"img_jogos/somaOssos/femur.png", 0},
+    {"img_jogos/somaOssos/tibia.png", 0},
+    {"img_jogos/somaOssos/fibula.png", 0},
+    {"img_jogos/somaOssos/umero.png", 0},
+    {"img_jogos/somaOssos/ulna.png", 0},
+    {"img_jogos/somaOssos/coccix.png", 0},
+    {"img_jogos/somaOssos/sacro.png", 0},
+
+
+    {"img_jogos/somaOssos/tibia.png", 0},
+    {"img_jogos/somaOssos/fibula.png", 0},
+    {"img_jogos/somaOssos/femur.png", 0},
+    {"img_jogos/somaOssos/tibia.png", 0},
+    {"img_jogos/somaOssos/fibula.png", 0}
+}
+
 local function onMenuTouch(event)
     if ( event.phase == "ended" ) then
         slide:onMenuTouch()
@@ -72,6 +90,20 @@ function localResposta()
     end
 end
 
+function selecionaOssoResposta ()
+    id = math.random(1, 12)
+
+    
+
+    if (osso[id][2] == 1) then
+        id = selecionaOssoResposta()
+    end
+
+    osso[id][2] = 1
+
+    return id
+end
+
 function geraOpcRespostas()
     iniFase = display.contentCenterX - 100
     yFaseB = 70
@@ -85,7 +117,10 @@ function geraOpcRespostas()
             iniFase = display.contentCenterX - 100
         end
 
-        local soma_ossos = display.newImageRect( "img_jogos/ossos.png", 65, 65 )
+        
+        id = selecionaOssoResposta()
+
+        local soma_ossos = display.newImageRect( osso[id][1], 65, 65 )
         soma_ossos.x = iniFase
         soma_ossos.y = yFaseF
         soma_ossos:addEventListener("touch", selecionado)
