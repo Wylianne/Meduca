@@ -6,7 +6,7 @@ local widget = require("widget")
 
 local slide = require("slide_menu")
 
-buttons = true
+
 -- Image sheet options and declaration
 local options = {
     width = 280,
@@ -59,8 +59,8 @@ function geraButtons()
             labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 0, 0.5 } },
             fillColor = { default={1,0,0,1}, over={1,0,0,0.8} },
             strokeColor = { default={1,0,0,0.9}, over={0.8,0.8,1,1} },
-            strokeWidth = 5
-            --    onEvent = viewFieldsEvent
+            strokeWidth = 5,
+            onEvent = telaFim
             
         })
         btnCorrigir.x = display.contentCenterX - 92
@@ -78,8 +78,8 @@ function geraButtons()
             labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 0, 0.5 } },
             fillColor = { default={0.1,0.5,0, 0.9}, over={0.2,0.4,0.7,0.5} },
             strokeColor = { default={0.1,0.5,0,0.9}, over={0.1,0.5,0,1} },
-            strokeWidth = 5
-            --    onEvent = viewFieldsEvent
+            strokeWidth = 5,
+            onEvent = proximaPergunta
             
         })
         btnNext.x = display.contentCenterX + 92
@@ -98,11 +98,11 @@ local function radioButtons()
         local radioButton1 = widget.newSwitch(
             {
                 left = 20,
-                top = 140 + (i*49),
+                top = 140 + i*50,
                 style = "radio",
                 id = i,
                 width = 280,
-                height = 50,
+                height = 49,
                 initialSwitchState = false,
                 onPress = onSwitchPress,
                 sheet = radioButtonSheet,
@@ -122,10 +122,24 @@ local function radioButtons()
     end
 end
 
+function telaFim( ... )
+    -- body
+end
+
+function proximaPergunta( ... )
+    quiz:destroy()
+end
+
 
 function quiz:create(event)
+
+end
+
+function quiz:show(event)
     SceneGroup = self.view
     
+    buttons = true
+
     local background = display.newImageRect( "menu_principal/fundo_menu1.png", 360, 570 )
     background.x = display.contentCenterX
     background.y = display.contentCenterY
@@ -183,5 +197,15 @@ function quiz:create(event)
 
 end
 
-quiz:addEventListener("create", quiz)
+
+function quiz:destroy(event)
+    quiz:show()
+end
+
+quiz:addEventListener( "create", quiz )
+quiz:addEventListener( "show", quiz )
+quiz:addEventListener( "hide", quiz )
+quiz:addEventListener( "destroy", quiz )
+
+
 return quiz
