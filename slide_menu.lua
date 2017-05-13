@@ -30,10 +30,7 @@ function slideMenuClose(event)
         transition.to(line3, {time=220, x = line3.x - display.actualContentWidth*0.545})
         transition.to(lineEnd, {time=220, x = lineEnd.x - display.actualContentWidth*0.545})
 
-        if (event.target.id == "menu_close") then
-            menuActive = false
-        end
-
+        menuActive = false
     end
 end
 
@@ -66,8 +63,9 @@ function goToSair( event )
 end
 
 function slide_menu:onMenuTouch()
-    if (menuActive == false) then
 
+    if (menuActive == false) then
+        menuActive = true
             
         --menu = display.newImageRect( "menu_principal/menu.png", display.actualContentWidth/2, display.actualContentHeight )
         menu = display.newRect(-90, 0, display.actualContentWidth*0.55,display.actualContentHeight )
@@ -169,7 +167,7 @@ function slide_menu:onMenuTouch()
 
 
 
-        menuActive = true
+        
     end
 end
 

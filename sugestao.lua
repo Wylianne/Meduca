@@ -30,6 +30,17 @@ end
 function sugestao:show(event)
     SceneGroup = self.view
 
+    print(menu_close.x)
+    if (menu_close.x == 151) then
+        menuActive = false
+    end
+
+    boxSugestao = native.newTextBox( display.contentCenterX, display.contentCenterY * 0.8, display.contentCenterX*1.8, display.contentCenterY * 0.8 )
+    boxSugestao.isFontSizeScaled = true  -- Make the text box use the same font units as the text object
+    boxSugestao.size = 13
+    boxSugestao.placeholder = "Digite aqui sua sugestão para o jogo!"
+    boxSugestao.isEditable = true
+    SceneGroup:insert(boxSugestao)
     
     local background = display.newImageRect( "menu_principal/fundo_menu1.png", 360, 570 )
     background.x = display.contentCenterX
@@ -57,13 +68,6 @@ function sugestao:show(event)
     back_menu.y = -30
     SceneGroup:insert(back_menu)
     back_menu:addEventListener( "touch", backMenu )
-
-    boxSugestao = native.newTextBox( display.contentCenterX, display.contentCenterY * 0.8, display.contentCenterX*1.8, display.contentCenterY * 0.8 )
-    boxSugestao.isFontSizeScaled = true  -- Make the text box use the same font units as the text object
-    boxSugestao.size = 13
-    boxSugestao.placeholder = "Digite aqui sua sugestão para o jogo!"
-    boxSugestao.isEditable = true
-    SceneGroup:insert(boxSugestao)
 
 end
 

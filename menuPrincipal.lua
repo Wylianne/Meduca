@@ -21,15 +21,18 @@ function secondMenu(event)
 end
 
 function goToQuebraOssos(event)
-    if (event.phase == "ended") then
+    if (event.phase == "began") then
+        print(menuActive)
         if (menuActive == false) then
             composer.gotoScene("quebra_ossos")
         end
     end
+
+    return true
 end
 
 function goToSomaOssos(event)
-    if (event.phase == "ended") then
+    if (event.phase == "began") then
         if (menuActive == false) then
             composer.gotoScene("soma_ossos")
         end
@@ -37,7 +40,7 @@ function goToSomaOssos(event)
 end
 
 function goToPalavrasCruzadas(event)
-    if (event.phase == "ended") then
+    if (event.phase == "began") then
         if (menuActive == false) then
             composer.gotoScene("palavras_cruzadas")
         end
@@ -45,8 +48,7 @@ function goToPalavrasCruzadas(event)
 end
 
 function goToQuiz(event)
-    if (event.phase == "ended") then
-        print(menuActive)
+    if (event.phase == "began") then
         if (menuActive == false) then
             composer.gotoScene("quiz")
         end
@@ -54,7 +56,7 @@ function goToQuiz(event)
 end
 
 function goToTiroAlvo(event)
-    if (event.phase == "ended") then
+    if (event.phase == "began") then
         if (menuActive == false) then
             composer.gotoScene("tiro_alvo")
         end
