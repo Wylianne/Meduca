@@ -32,7 +32,7 @@ end
 
 function goToPalavrasCruzadas(event)
     if (event.phase == "ended") then
-        composer.gotoScene("palavras_cruzadas")
+        composer.gotoScene("cruzadas")
     end
 end
 
