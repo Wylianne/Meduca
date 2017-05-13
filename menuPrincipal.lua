@@ -14,37 +14,50 @@ end
 
 function secondMenu(event)
     if (event.phase == "ended") then
-        composer.gotoScene("menuPrincipal_2")
+        if (menuActive == false) then
+            composer.gotoScene("menuPrincipal_2")
+        end
     end
 end
 
 function goToQuebraOssos(event)
     if (event.phase == "ended") then
-        composer.gotoScene("quebra_ossos")
+        if (menuActive == false) then
+            composer.gotoScene("quebra_ossos")
+        end
     end
 end
 
 function goToSomaOssos(event)
     if (event.phase == "ended") then
-        composer.gotoScene("soma_ossos")
+        if (menuActive == false) then
+            composer.gotoScene("soma_ossos")
+        end
     end
 end
 
 function goToPalavrasCruzadas(event)
     if (event.phase == "ended") then
-        composer.gotoScene("palavras_cruzadas")
+        if (menuActive == false) then
+            composer.gotoScene("palavras_cruzadas")
+        end
     end
 end
 
 function goToQuiz(event)
     if (event.phase == "ended") then
-        composer.gotoScene("quiz")
+        print(menuActive)
+        if (menuActive == false) then
+            composer.gotoScene("quiz")
+        end
     end
 end
 
 function goToTiroAlvo(event)
     if (event.phase == "ended") then
-        composer.gotoScene("tiro_alvo")
+        if (menuActive == false) then
+            composer.gotoScene("tiro_alvo")
+        end
     end
 end
  
@@ -117,7 +130,6 @@ function menuPrincipal:create(event)
     tiroAlvo.y = 250
     SceneGroup:insert(tiroAlvo)
     tiroAlvo:addEventListener("touch", goToTiroAlvo)
-
 
 end
 

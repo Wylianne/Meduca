@@ -1,11 +1,17 @@
+local composer =  require("composer") 
+
 local widget = require( "widget" )
+
+local ragdogLib = require "ragdogLib";
 
 local slide_menu = {}
 
-local menuActive = false
+menuActive = false
+
 
 function slideMenuClose(event)
     if (event.phase == "ended") then
+    
         transition.to(menu, {time=300, x = menu.x - display.actualContentWidth*0.55})
         transition.to(menu_close, {time=300, x = menu_close.x - display.actualContentWidth/2}) 
         transition.to(logo, {time=300, x = logo.x - display.actualContentWidth/2}) 
@@ -24,28 +30,54 @@ function slideMenuClose(event)
         transition.to(line3, {time=220, x = line3.x - display.actualContentWidth*0.545})
         transition.to(lineEnd, {time=220, x = lineEnd.x - display.actualContentWidth*0.545})
 
+        if (event.target.id == "menu_close") then
+            menuActive = false
+        end
 
-        menuActive = false
+    end
+end
+
+function goToEstatisticas( event )
+    if (event.phase == "ended") then
+        slideMenuClose(event)
+    end
+end
+
+function goToComoJogar( event )
+    if (event.phase == "ended") then
+        slideMenuClose(event)
     end
 end
 
 function goToSugestoes( event )
     if (event.phase == "ended") then
-        print("entrou")
+        
+        composer.gotoScene("sugestao")
+        slideMenuClose(event)
+    end
+end
+
+function goToSair( event )
+    if (event.phase == "ended") then
+        
+        composer.gotoScene("login")
+        slideMenuClose(event)
     end
 end
 
 function slide_menu:onMenuTouch()
     if (menuActive == false) then
+
             
         --menu = display.newImageRect( "menu_principal/menu.png", display.actualContentWidth/2, display.actualContentHeight )
         menu = display.newRect(-90, 0, display.actualContentWidth*0.55,display.actualContentHeight )
         menu.y = display.contentCenterY
-        menu:setFillColor(0.2,0.4,0.6)
+        menu:setFillColor(ragdogLib.convertHexToRGB("#336699"))
 
         menu_close = display.newImageRect( "slide_menu/close.png", 25, 25 )
         menu_close.x = -9
         menu_close.y = -30
+        menu_close.id = "menu_close"
         menu_close:addEventListener( "touch", slideMenuClose )
 
         logo = display.newImageRect("slide_menu/logo.png", 150, 85)
@@ -58,11 +90,11 @@ function slide_menu:onMenuTouch()
 
 
         lineBeginTop = display.newLine( -175, 105, 0, 105 )
-        lineBeginTop:setStrokeColor( 0.2, 0.2, 0.2, 1 )
+        lineBeginTop:setStrokeColor(ragdogLib.convertHexToRGB("#999999"))
         lineBeginTop.strokeWidth = 0.9
 
         slider = widget.newSlider({
-            top = 98,
+            top = 100,
             left = -165,
             width = 150,
             value = 10,  -- Start slider at 10% (optional)
@@ -71,43 +103,45 @@ function slide_menu:onMenuTouch()
 
 
 
-        lineBegin = display.newLine( -175, 135, 0, 135 )
-        lineBegin:setStrokeColor( 0.2, 0.2, 0.2, 1 )
+        lineBegin = display.newLine( -175, 140, 0, 140 )
+        lineBegin:setStrokeColor(ragdogLib.convertHexToRGB("#999999"))
         lineBegin.strokeWidth = 0.9
 
-        opcMenuEstatisticas = display.newText( "¤  Estatísticas", -140, 140, native.systemFont, 15 )
+        opcMenuEstatisticas = display.newText( "¤  Estatísticas", -140, 148, native.systemFont, 15 )
         opcMenuEstatisticas:setFillColor( 1, 1, 1 )
         opcMenuEstatisticas.xAlign, opcMenuEstatisticas.anchorX, opcMenuEstatisticas.anchorY = "left", 0, 0
-        opcMenuEstatisticas:addEventListener("touch", goToSugestoes)
+        opcMenuEstatisticas:addEventListener("touch", goToEstatisticas)
 
-        line1 = display.newLine( -165, 163, 0, 163 )
-        line1:setStrokeColor( 0.2, 0.2, 0.2, 1 )
+        line1 = display.newLine( -140, 173, 0, 173 )
+        line1:setStrokeColor(ragdogLib.convertHexToRGB("#999999"))
         line1.strokeWidth = 0.9
 
-        opcMenuComoJogar = display.newText( "¤  Como Jogar", -140, 168, native.systemFont, 15 )
+        opcMenuComoJogar = display.newText( "¤  Como Jogar", -140, 181, native.systemFont, 15 )
         opcMenuComoJogar:setFillColor( 1, 1, 1 )
         opcMenuComoJogar.xAlign, opcMenuComoJogar.anchorX, opcMenuComoJogar.anchorY = "left", 0, 0
-        opcMenuComoJogar:addEventListener("touch", goToSugestoes)
+        opcMenuComoJogar:addEventListener("touch", goToComoJogar)
 
-        line2 = display.newLine( -165, 191, 0, 191 )
-        line2:setStrokeColor( 0.2, 0.2, 0.2, 1 )
+        line2 = display.newLine( -140, 206, 0, 206 )
+        line2:setStrokeColor(ragdogLib.convertHexToRGB("#999999"))
         line2.strokeWidth = 0.9
 
-        opcMenuSugestoes = display.newText( "¤  Sugestões", -140, 196, native.systemFont, 15 )
+        opcMenuSugestoes = display.newText( "¤  Sugestões", -140, 214, native.systemFont, 15 )
         opcMenuSugestoes:setFillColor( 1, 1, 1 )
         opcMenuSugestoes.xAlign, opcMenuSugestoes.anchorX, opcMenuSugestoes.anchorY = "left", 0, 0
+        opcMenuSugestoes:addEventListener("touch", goToSugestoes)
 
-        line3 = display.newLine( -165, 219, 0, 219 )
-        line3:setStrokeColor( 0.2, 0.2, 0.2, 1 )
+        line3 = display.newLine( -140, 239, 0, 239 )
+        line3:setStrokeColor(ragdogLib.convertHexToRGB("#999999"))
         line3.strokeWidth = 0.9
 
-        opcMenuSair = display.newText( "¤  Desconectar", -140, 224, native.systemFont, 15 )
+        opcMenuSair = display.newText( "¤  Desconectar", -140, 246, native.systemFont, 15 )
         opcMenuSair:setFillColor( 1, 1, 1 )
         opcMenuSair.xAlign, opcMenuSair.anchorX, opcMenuSair.anchorY = "left", 0, 0
+        opcMenuSair:addEventListener("touch", goToSair)
 
 
-        lineEnd = display.newLine( -175, 247, 0, 247 )
-        lineEnd:setStrokeColor( 0.2, 0.2, 0.2, 1 )
+        lineEnd = display.newLine( -175, 272, 0, 272 )
+        lineEnd:setStrokeColor(ragdogLib.convertHexToRGB("#999999"))
         lineEnd.strokeWidth = 0.9
         
 

@@ -7,12 +7,14 @@ local function removeObjectsOfScena ()
     fieldLogin:removeSelf()
 end
 
-local function viewFieldsEvent(event)
+function viewFieldsEvent(event)
 
     if ( "ended" == event.phase ) then
         if (fieldLogin.text=="admin" and fieldPass.text=="admin") then
-            removeObjectsOfScena()
+            --removeObjectsOfScena()
             composer.gotoScene( "menuPrincipal" )        
+        else
+            native.showAlert("Aviso","Login e/ou senha incorreto(s)")
         end
         
     end
@@ -33,6 +35,23 @@ local function moveScene()
 
 end
 
+function criaInputs()
+        
+    fieldLogin = native.newTextField( display.actualContentWidth/2, 
+                                300 , 
+                                180,
+                                20 )
+
+
+    fieldPass =  native.newTextField( display.actualContentWidth/2, 
+                                    330, 
+                                    180, 
+                                    20 )
+
+    fieldPass.isSecure = true
+    
+end
+
 function login:create(event)
     local SceneGroup = self.view
 
@@ -51,7 +70,7 @@ function login:create(event)
     
     moveScene()
 
-    
+    criaInputs()
 
     local widget = require( "widget" )
 
@@ -74,22 +93,6 @@ function login:create(event)
     btnLogin.y = display.contentCenterY*1.6
     SceneGroup:insert(btnLogin)
     
-
-    fieldLogin = native.newTextField( display.actualContentWidth/2, 
-                                300 , 
-                                180,
-                                20 )
-
-    SceneGroup:insert(fieldLogin)
-
-
-    fieldPass =  native.newTextField( display.actualContentWidth/2, 
-                                    330, 
-                                    180, 
-                                    20 )
-
-    fieldPass.isSecure = true
-    SceneGroup:insert(fieldPass)
 
     textLoginWith = display.newText("Entrar com", display.contentCenterX, display.contentCenterY * 1.8 )
     textLoginWith:setFillColor(0,0,0)
@@ -114,5 +117,38 @@ function login:create(event)
 
 end
 
+
+ 
+
+function login:show(event)
+    if (event.phase == "did" ) then
+        fieldLogin.isVisible = true
+        fieldPass.isVisible = true
+        
+        fieldLogin.text = ""
+        fieldPass.text = ""
+
+    end
+end 
+
+function login:hide(event)
+  if (event.phase == "did") then
+    fieldLogin.isVisible = false
+    fieldPass.isVisible = false
+  end  
+end
+
+function login:destroy(event)
+    if (event.phase == "did" ) then
+        --login:show()
+    end
+end
+
+
+
 login:addEventListener("create", login)
+login:addEventListener("show", login)
+login:addEventListener("hide", login)
+login:addEventListener( "destroy", login )
+
 return login

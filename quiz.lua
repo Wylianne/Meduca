@@ -39,9 +39,9 @@ end
 
 
 local function onSwitchPress( event )
-    local switch = event.target
+    
     geraButtons()
-    if (correcao[switch.id] == 1) then
+    if (correcao[event.target.id] == 1) then
         print("correto")
     end
 end
