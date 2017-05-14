@@ -12,3 +12,4 @@ local composer = require( "composer" )
 composer.gotoScene("menuPrincipal")
 --composer.gotoScene("quebra_ossos")
 --composer.gotoScene("quiz")
+
