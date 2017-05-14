@@ -34,6 +34,8 @@ function slideMenuClose(event)
 
         if (boxSlide)then
             transition.to(boxSugestao, {time=400, x = boxSugestao.x - display.actualContentWidth*0.545})
+            transition.to(textSugestao, {time=400, x = textSugestao.x - display.actualContentWidth*0.545})
+            transition.to(btnEnviar, {time=400, x = btnEnviar.x - display.actualContentWidth*0.545})
             boxSlide = false
         end
     end
