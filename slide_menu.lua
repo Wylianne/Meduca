@@ -31,6 +31,11 @@ function slideMenuClose(event)
         transition.to(lineEnd, {time=220, x = lineEnd.x - display.actualContentWidth*0.545})
 
         menuActive = false
+
+        if (boxSlide)then
+            transition.to(boxSugestao, {time=400, x = boxSugestao.x - display.actualContentWidth*0.545})
+            boxSlide = false
+        end
     end
 end
 
