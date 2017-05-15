@@ -21,7 +21,7 @@ end
 function menuPrincipal:create(event)
     local SceneGroup = self.view
     
-    local background = display.newImageRect( "menu_principal/menu3.png", 360, 570 )
+    local background = display.newImageRect( "menu_principal/menu3.png", display.contentCenterX*2, display.contentCenterY*2.37 )
     background.x = display.contentCenterX
     background.y = display.contentCenterY
     SceneGroup:insert(background)

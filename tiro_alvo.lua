@@ -75,7 +75,7 @@ local function moveScene()
         tm = timer.performWithDelay( velocidade, endScene)
         tm.params = { param = objeto}
     else
-        timer.performWithDelay( 3000, createButons)
+        timer.performWithDelay( 4000, createButons)
     end
 end
 
@@ -160,7 +160,7 @@ function tiro_alvo:show(event)
     SceneGroup = self.view
     alvo = "hemacia"
 
-    local fundo = display.newImageRect( "img_jogos/fundo_sangue.png", 320, 570 )
+    local fundo = display.newImageRect( "img_jogos/fundo_sangue.png", display.contentCenterX*2, display.contentCenterY*2.37 )
     fundo.x =  display.contentCenterX 
     fundo.y = display.contentCenterY
     SceneGroup:insert(fundo)

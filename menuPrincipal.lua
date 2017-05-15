@@ -67,7 +67,7 @@ end
 function menuPrincipal:create(event)
     local SceneGroup = self.view
     
-    local background = display.newImageRect( "menu_principal/fundo_menu1.png", 360, 570 )
+    local background = display.newImageRect( "menu_principal/fundo_menu1.png", display.contentCenterX*2, display.contentCenterY*2.37 )
     background.x = display.contentCenterX
     background.y = display.contentCenterY
     SceneGroup:insert(background)
@@ -104,7 +104,7 @@ function menuPrincipal:create(event)
     SceneGroup:insert(media)
 
 
-    local soma_ossos = display.newImageRect( "menu_principal/soma_ossos.png", 70, 70 )
+    local soma_ossos = display.newImageRect( "menu_principal/soma_ossos.png", display.contentCenterX*0.44, 70 )
     soma_ossos.x = display.contentCenterX - 100
     soma_ossos.y = 150
     SceneGroup:insert(soma_ossos)

@@ -55,7 +55,7 @@ end
 function login:create(event)
     local SceneGroup = self.view
 
-    local background = display.newImageRect( "tela_login/fundo.png", 360, 570 )
+    local background = display.newImageRect( "tela_login/fundo.png", display.contentCenterX*2, display.contentCenterY*2.37 )
     background.x = display.contentCenterX
     background.y = display.contentCenterY
 

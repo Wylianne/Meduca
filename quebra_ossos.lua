@@ -320,7 +320,7 @@ function quebraOssos:show(event)
     erroLetra = 0
     valueDica = 0
 
-    local background = display.newImageRect( "menu_principal/fundo_menu1.png", 360, 570 )
+    local background = display.newImageRect( "menu_principal/fundo_menu1.png", display.contentCenterX*2, display.contentCenterY*2.37 )
     background.x = display.contentCenterX
     background.y = display.contentCenterY
     SceneGroup:insert(background)
