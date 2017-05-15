@@ -1,14 +1,16 @@
 local composer =  require("composer") 
 
+local widget = require( "widget" )
+
 local tiro_alvo = composer.newScene()
 
 
 local slide = require("slide_menu")
 
 local objetos= {
-            {"img_jogos/hemacia.png", "hemacia"},
-            {"img_jogos/leucocito.png", "leucocito"},
-            {"img_jogos/plaqueta.png", "plaqueta"}
+            {"img_jogos/hemacia.png", "hemacia", ""},
+            {"img_jogos/leucocito.png", "leucocito", ""},
+            {"img_jogos/plaqueta.png", "plaqueta", ""}
          }
 
 local function onMenuTouch(event)
@@ -27,18 +29,29 @@ end
 
 function touchMe( event)
     if (event.phase == "began") then
-        print(event.target.id)
         if (event.target.id == alvo) then
             scorePoint.text = tonumber(scorePoint.text) + 10
+            if (tonumber(scorePoint.text) > tonumber(bsPoint.text)) then
+                bsPoint.text = tonumber(scorePoint.text)
+            end
         elseif (event.target.id ~= alvo) then
             scorePoint.text = tonumber(scorePoint.text) - 5
-           
         end
+
+        event.target.isVisible = false
+        
     end
 end
 
 local function moveScene()
     if (tonumber(scorePoint.text) > 0) then
+        score.isVisible = true
+        rectPoint.isVisible = true
+        scorePoint.isVisible = true
+        bs.isVisible = true
+        rectBS.isVisible = true
+        bsPoint.isVisible = true
+
 
         id = math.random(3)
 
@@ -59,17 +72,84 @@ local function moveScene()
         --teste(objeto)
 
         timer.performWithDelay( 800, moveScene )
-        tm = timer.performWithDelay( velocidade, teste)
+        tm = timer.performWithDelay( velocidade, endScene)
         tm.params = { param = objeto}
+    else
+        timer.performWithDelay( 3000, createButons)
     end
 end
 
-function teste(event)
+function endScene(event)
     local params = event.source.params
-    if (params.param.id == alvo) then
-        scorePoint.text = tonumber(scorePoint.text) - 10
+    print(params.param.id)
+        if (tonumber(scorePoint.text) > 0) then
+            if (params.param.id == alvo) then
+                scorePoint.text = tonumber(scorePoint.text) - 5
+            end
+        end
+        params.param:removeSelf()
+end
+
+function start( event )
+    if (event.phase == "began") then
+        btnPlay:removeSelf()
+        btnBS:removeSelf()
+
+        
+
+        moveScene()
+
     end
-    params.param:removeSelf()
+end
+
+function createButons()   
+
+    score.isVisible = false
+    rectPoint.isVisible = false
+    scorePoint.isVisible = false
+    bs.isVisible = false
+    rectBS.isVisible = false
+    bsPoint.isVisible = false
+
+    scorePoint.text = "15"
+    bsPoint.text = "15"
+
+    btnPlay = widget.newButton({
+        left = 120,
+        top = 100,   
+        label = "Play",
+        shape = "roundedRect",
+        width = 120,
+        height = 25,
+        cornerRadius = 6,
+        labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 0, 0.5 } },
+        fillColor = { default={0,0.4,1,0}, over={0,0.2,0.9,0} },
+        strokeColor = { default={1,1,1}, over={1,1,1} },
+        strokeWidth = 1.5,
+        onEvent = start
+        
+    })
+    btnPlay.x = display.contentCenterX
+    btnPlay.y = display.contentCenterY*0.9
+    SceneGroup:insert(btnPlay)
+
+    btnBS = widget.newButton({
+        left = 120,
+        top = 100,   
+        label = "Best Score",
+        shape = "roundedRect",
+        width = 120,
+        height = 25,
+        cornerRadius = 6,
+        labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 0, 0.5 } },
+        fillColor = { default={0,0.4,1,0}, over={0,0.2,0.9,0} },
+        strokeColor = { default={1,1,1}, over={1,1,1} },
+        strokeWidth = 1.5
+        
+    })
+    btnBS.x = display.contentCenterX
+    btnBS.y = display.contentCenterY * 1.1
+    SceneGroup:insert(btnBS)
 end
 
 function tiro_alvo:create(event)
@@ -107,18 +187,49 @@ function tiro_alvo:show(event)
     SceneGroup:insert(back_menu)
     back_menu:addEventListener( "touch", backMenu )
 
-    score = display.newText("Score:", display.contentCenterX * 1.6, 0)
+    score = display.newText("Score:", display.contentCenterX * 1.25, display.contentCenterY * 0.035)
     score:setFillColor(1,1,1)
     --score.x = display.contentCenterX
     SceneGroup:insert(score)
 
-    scorePoint = display.newText("100", display.contentCenterX * 1.9, 0)
+    rectPoint = display.newRoundedRect( display.contentCenterX * 1.5, display.contentCenterY * 0.03, display.contentCenterX * 0.9, 30, 8 )
+    rectPoint.strokeWidth = 2
+    rectPoint:setFillColor( 1, 0, 0, 0 )
+    rectPoint:setStrokeColor( 1, 1, 1 )
+    SceneGroup:insert(rectPoint)
+
+    scorePoint = display.newText("15", display.contentCenterX * 1.46, display.contentCenterY * 0.035)
     scorePoint:setFillColor(1,1,1)
     --score.x = display.contentCenterX
     SceneGroup:insert(scorePoint)
 
-    moveScene()
 
+    bs = display.newText("BS:", display.contentCenterX * 0.2, display.contentCenterY * 0.035)
+    bs:setFillColor(1,1,1)
+    --score.x = display.contentCenterX
+    SceneGroup:insert(bs)
+
+    rectBS = display.newRoundedRect( display.contentCenterX * 0.5, display.contentCenterY * 0.03, display.contentCenterX * 0.9, 30, 8 )
+    rectBS.strokeWidth = 2
+    rectBS:setFillColor( 1, 0, 0, 0 )
+    rectBS:setStrokeColor( 1, 1, 1 )
+    SceneGroup:insert(rectBS)
+
+    bsPoint = display.newText("15", display.contentCenterX * 0.35, display.contentCenterY * 0.035)
+    bsPoint:setFillColor(1,1,1)
+    --score.x = display.contentCenterX
+    SceneGroup:insert(bsPoint)
+
+    score.isVisible = false
+    rectPoint.isVisible = false
+    scorePoint.isVisible = false
+    bs.isVisible = false
+    rectBS.isVisible = false
+    bsPoint.isVisible = false
+
+
+
+    createButons()
 
 end
 
