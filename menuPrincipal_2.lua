@@ -70,39 +70,39 @@ function menuPrincipal:create(event)
     media.x = display.contentCenterX
 
     local soma_ossos = display.newImageRect( "menu_principal/soma_ossos.png", display.contentCenterX*0.44, display.contentCenterX*0.45 )
-    soma_ossos.x = display.contentCenterX - 100
-    soma_ossos.y = 150
+    soma_ossos.x = display.contentCenterX * 0.37
+    soma_ossos.y = display.contentCenterY * 0.625
     SceneGroup:insert(soma_ossos)
     soma_ossos:addEventListener("touch", goToSomaOssos)
 
     local palavras_cruzadas = display.newImageRect( "menu_principal/palavras_cruzadas.png", display.contentCenterX*0.44, display.contentCenterX*0.45 )
     palavras_cruzadas.x = display.contentCenterX
-    palavras_cruzadas.y = 150
+    palavras_cruzadas.y = display.contentCenterY * 0.625
     SceneGroup:insert(palavras_cruzadas)  
     palavras_cruzadas:addEventListener("touch", goToPalavrasCruzadas)  
 
     local quebra_ossos = display.newImageRect( "menu_principal/quebra_ossos.png", display.contentCenterX*0.44, display.contentCenterX*0.45 )
-    quebra_ossos.x = display.contentCenterX + 100
-    quebra_ossos.y = 150
+    quebra_ossos.x = display.contentCenterX * 1.63
+    quebra_ossos.y = display.contentCenterY * 0.625
     SceneGroup:insert(quebra_ossos)
     quebra_ossos:addEventListener("touch", goToQuebraOssos)
 
     local quiz = display.newImageRect( "menu_principal/quiz.png", display.contentCenterX*0.44, display.contentCenterX*0.45 )
-    quiz.x = display.contentCenterX - 100
-    quiz.y = 250
+    quiz.x = display.contentCenterX * 0.37
+    quiz.y = display.contentCenterY * 1.045
     SceneGroup:insert(quiz)
     quiz:addEventListener("touch", goToQuiz)
 
     local tiroAlvo = display.newImageRect( "menu_principal/alvo.png", display.contentCenterX*0.44, display.contentCenterX*0.45 )
     tiroAlvo.x = display.contentCenterX
-    tiroAlvo.y = 250
+    tiroAlvo.y = display.contentCenterY * 1.045
     SceneGroup:insert(tiroAlvo)
     tiroAlvo:addEventListener("touch", goToTiroAlvo)
     
     
     local palavras_cruzadas = display.newImageRect( "menu_principal/lab.png", display.contentCenterX*0.44, display.contentCenterX*0.45 )
-    palavras_cruzadas.x = display.contentCenterX + 100
-    palavras_cruzadas.y = 250
+    palavras_cruzadas.x = display.contentCenterX * 1.63
+    palavras_cruzadas.y = display.contentCenterY * 1.045
     SceneGroup:insert(palavras_cruzadas) 
     
 
