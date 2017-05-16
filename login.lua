@@ -113,12 +113,7 @@ function login:create(event)
     loginTwitter.x = display.contentCenterX + display.contentCenterX / 2 
     loginTwitter.y = display.contentCenterY * 2
     SceneGroup:insert(loginTwitter)
-
-
 end
-
-
- 
 
 function login:show(event)
     if (event.phase == "did" ) then

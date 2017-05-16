@@ -118,7 +118,7 @@ end
 function somaOssos:create(event)
     SceneGroup = self.view
     
-    local background = display.newImageRect( "menu_principal/fundo_menu1.png", display.contentCenterX*2, display.contentCenterX*2.37 )
+    local background = display.newImageRect( "menu_principal/fundo_menu1.png", display.contentCenterX*2, display.contentCenterY*2.37 )
     background.x = display.contentCenterX
     background.y = display.contentCenterY
     SceneGroup:insert(background)

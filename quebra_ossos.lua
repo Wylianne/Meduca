@@ -6,11 +6,21 @@ local slide = require("slide_menu")
 
 local widget = require("widget")
 local String = require("string")
+local sqlite3 = require( "sqlite3" )
+
+local path = system.pathForFile( "meduca.db", system.DocumentsDirectory )
+local db = sqlite3.open( path ) 
+
+
+function insertPointQB(ponto)
+    local tablefill = [[INSERT INTO quebra_ossos VALUES (NULL, ']]..ponto..[['); ]]
+    db:exec( tablefill )
+end
+
 
 palavraReal = "ÍSQUIO" --ate 10 letras
 palavra = "ISQUIO" --12letras
 dicas = {"É um osso", "Localizado em uma das extremidades", "Localizado na extremidade inferior"}
-
 
 local function geraEsqueleto ()
     local tornadoData = { width=70, height=183, numFrames=33, sheetContentWidth=2310, sheetContentHeight=183 }
@@ -39,8 +49,8 @@ local function geraEsqueleto ()
     elseif (erroLetra == 6) then
         myAnimation:removeSelf()
         sequenceData = {name="seq1", sheet=tornado, start=29, count=5, time=400, loopCount=1 }
-
-
+            
+        insertPointQB(tonumber(scorePoint.text))
         timer.performWithDelay( 2000,telaDerrota)
     end
 
@@ -50,7 +60,6 @@ local function geraEsqueleto ()
     myAnimation.y = 111
     SceneGroup:insert(myAnimation)
     myAnimation:play()
-
 end
 
 local function onMenuTouch(event)
@@ -114,8 +123,17 @@ function valida(letra)
         viewLetra:setFillColor(0.2,0.4,0.6)        
         SceneGroup:insert(viewLetra)
         change = 1
-        valida(letra)
+        acertos = acertos + 1
+
+        if (acertos == String.len(palavra)) then
+            insertPointQB(tonumber(scorePoint.text))
+            timer.performWithDelay(2000, telaVitoria)
+        else
+            valida(letra)
+        end
     end
+
+
 
     if (change == 0) then
         erroLetra = erroLetra + 1
@@ -276,10 +294,10 @@ function telaVitoria()
 
     myAnimation:removeSelf()
 
-    derrota = display.newImageRect( "img_jogos/vitoria.png", 250, 350)
-    derrota.x = display.contentCenterX
-    derrota.y = display.contentCenterY
-    SceneGroup:insert(derrota)
+    vitoria = display.newImageRect( "img_jogos/derrota.png", 250, 350)
+    vitoria.x = display.contentCenterX
+    vitoria.y = display.contentCenterY
+    SceneGroup:insert(vitoria)
 
     local jogarNovamente = widget.newButton({
         left = 120,
@@ -293,7 +311,7 @@ function telaVitoria()
         fillColor = { default={0,0.4,1,1}, over={0,0.2,0.9,1} },
         strokeColor = { default={1,0,0,1}, over={0.8,0.8,1,1} },
         strokeWidth = 0,
-            onEvent = viewFieldsEvent
+        onEvent = novoJogo
         
     })
 
@@ -319,6 +337,7 @@ function quebraOssos:show(event)
     
     erroLetra = 0
     valueDica = 0
+    acertos = 0
 
     local background = display.newImageRect( "menu_principal/fundo_menu1.png", display.contentCenterX*2, display.contentCenterY*2.37 )
     background.x = display.contentCenterX
@@ -359,9 +378,7 @@ function quebraOssos:show(event)
 
     montaAlfabeto()    
     geraPalavra()
-    geraEsqueleto()
-    
-
+    geraEsqueleto()  
 end
 
 
