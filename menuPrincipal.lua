@@ -63,6 +63,14 @@ function goToTiroAlvo(event)
         end
     end
 end
+
+function JogoBonus(event)
+    if (event.phase == "began") then
+        if (menuActive == false) then
+            composer.gotoScene("principal")
+        end
+    end
+end
  
 function menuPrincipal:create(event)
     local SceneGroup = self.view
@@ -133,6 +141,12 @@ function menuPrincipal:create(event)
     tiroAlvo.y = display.contentCenterY * 1.045
     SceneGroup:insert(tiroAlvo)
     tiroAlvo:addEventListener("touch", goToTiroAlvo)
+    
+    local jogoBonus = display.newImageRect( "menu_principal/bonus.png", display.contentCenterX*0.44, display.contentCenterX*0.45 )
+    jogoBonus.x = display.contentCenterX * 1.63
+    jogoBonus.y = display.contentCenterY * 1.045
+    SceneGroup:insert(jogoBonus)
+    jogoBonus:addEventListener("touch", JogoBonus)
 
 end
 
