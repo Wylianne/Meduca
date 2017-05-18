@@ -67,7 +67,7 @@ end
 function JogoBonus(event)
     if (event.phase == "began") then
         if (menuActive == false) then
-            composer.gotoScene("principal")
+            composer.gotoScene("jogoBonus")
         end
     end
 end
