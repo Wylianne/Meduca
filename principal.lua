@@ -293,7 +293,7 @@ function scene:show( event )
       addOsso()
       addVitamina()
         
-      texto = display.newText( "0", 20, 20, native.systemFont, 32 )
+      texto = display.newText( "0", 30, 20, native.systemFont, 32 )
       texto:setFillColor( 255, 255, 255 )
       group:insert( texto)
       
