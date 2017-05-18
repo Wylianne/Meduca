@@ -162,8 +162,8 @@ function loop( event )
         
     
           background_perdeu:setFillColor( 0, 0, 0 ,0.88)
-          background_perdeu = display.newText( tela_perdeu, "Você Perdeu" , 170, 220, native.systemFont, 22 )
-          background_perdeu = display.newText( tela_perdeu, "Sua pontuação foi: ".. texto.text , 170, 240, native.systemFont, 22 )
+          background_perdeu = display.newText( tela_perdeu, "Você Perdeu" , 170, 220, native.systemFont, 26 )
+          background_perdeu = display.newText( tela_perdeu, "Sua pontuação foi: ".. texto.text , 170, 240, native.systemFont, 26 )
           
          
           
