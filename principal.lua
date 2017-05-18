@@ -64,17 +64,7 @@ local sequenciaEsfera = {
 		  
 		   
 		}
-  function backMenu(event)
-    if (event.phase == "ended") then
-        event.target:removeSelf()
-        event.target:removeSelf(voltar)
- 
-        display.remove(tala_perdeu)
-        tala_perdeu = nil
-        composer.gotoScene("menuPrincipal")
-        
-    end
-end
+  
      
 function toque( event )
  if(comecou==false and caindo==false and event.phase == "began") then
@@ -124,6 +114,7 @@ function loop( event )
  
  	metros = metros + 0.1
   texto.text = math.floor( metros )
+  texto.text = string.sub(texto.text,1,5)
 
  	for i=0, 2 do 
 		local rand = math.random( 2 )
@@ -149,31 +140,32 @@ function loop( event )
 
 		if hasCollidedCircle(esfera,osso[i]) then
 			
-      tala_perdeu = display.newGroup()
+      tela_perdeu = display.newGroup()
  
-          local background_perdeu = display.newRect( tala_perdeu, 0, 0, display.contentWidth, display.contentHeight*2 )
+          local background_perdeu = display.newRect( tela_perdeu, 0, 0, display.contentWidth, display.contentHeight*2 )
           background_perdeu.anchorX = 0
           background_perdeu.anchorY = 0
         
-          virus = display.newImage( tala_perdeu, "sprites/esfera-perde.png")
+          virus = display.newImage( tela_perdeu, "sprites/esfera-perde.png")
           virus.x=170
           virus.y= 150
            
-          local resetBtn = display.newImage( tala_perdeu,"sprites/reload.png", 92, 72 )
-          resetBtn.x = 170
+          local resetBtn = display.newImageRect( tela_perdeu,"sprites/reload.png", 82, 62 )
+          resetBtn.x = 220
           resetBtn.y = 340
           resetBtn:addEventListener( "touch", reinicia )
+          
+          local back_menu = display.newImageRect(tela_perdeu, "sprites/voltar.png", 82, 62 )          
+          back_menu.x = 100
+          back_menu.y = 340
+          back_menu:addEventListener(  "touch", backMenu )
         
     
           background_perdeu:setFillColor( 0, 0, 0 ,0.88)
-          background_perdeu = display.newText( tala_perdeu, "Você Perdeu" , 170, 220, native.systemFont, 22 )
-          background_perdeu = display.newText( tala_perdeu, "Sua pontuação foi: ".. texto.text , 170, 240, native.systemFont, 22 )
+          background_perdeu = display.newText( tela_perdeu, "Você Perdeu" , 170, 220, native.systemFont, 22 )
+          background_perdeu = display.newText( tela_perdeu, "Sua pontuação foi: ".. texto.text , 170, 240, native.systemFont, 22 )
           
-          local back_menu = display.newImageRect( "menu_principal/arrows-left.png", 25, 25 )
-          back_menu.x = display.contentCenterX * 1.9
-          back_menu.y = -30
-          group:insert(back_menu)
-          back_menu:addEventListener( "touch", backMenu )
+         
           
     caindo = false
   end
@@ -196,16 +188,29 @@ end
 
 
 function reinicia(event) 
-  event.target:removeSelf()
+  if (event.phase == "ended") then
+    event.target:removeSelf()
+   
+    display.remove(tela_perdeu)
+    tela_perdeu = nil
+   
+    caindo = true
+    
+    velocidade = 4
+    metros = 0
+    scene:destroy()     
+  end
+end
+
+function backMenu(event)
+    if (event.phase == "ended") then
+        event.target:removeSelf()
  
-  display.remove(tala_perdeu)
-  tala_perdeu = nil
+        display.remove(tela_perdeu)
+        tela_perdeu = nil
+        composer.gotoScene("menuPrincipal")
  
-  caindo = true
-  
-  velocidade = 4
-  metros = 0
-  scene:destroy()     
+    end
 end
 
 function backgroud()
@@ -293,7 +298,7 @@ function scene:show( event )
       addOsso()
       addVitamina()
         
-      texto = display.newText( "0", 30, 20, native.systemFont, 32 )
+      texto = display.newText( "0", 50, 20, native.systemFont, 26 )
       texto:setFillColor( 255, 255, 255 )
       group:insert( texto)
       
