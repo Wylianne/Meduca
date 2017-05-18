@@ -53,6 +53,10 @@ Este jogo é baseado em jogos arcade de tiro, no jogo ossos invadiram a corrente
 O nome do osso que deve ser eliminado aparece no topo da tela e ele muda constantemente, para eliminar os ossos basta tocá-los e eles automaticamente desaparecem e o jogador ganha ponto. O jogo possui um sistema de tempo e à medida que o tempo passa o osso que deve ser eliminado vai mudando e a velocidade que eles passam pelas veias aumenta.
 Ao clicar em algum organismo errado, como plasma, hemácias, leucócitos e plaqueta, o jogador perde ponto, ele perderá o jogo se sua pontuação chegar a zero ou o tempo esgotar. Também é possível obter mais tempo clicando em um determinado organismo que aparece aleatoriamente na tela.
 
+### 6. Jogo Bônus
+Jogo com foco no entretenimento, um bonus para o usuario, quando quiser. 
+O jogo consiste que o corpo está infectado por virus, o anticorpo(ninja) deverá desviar dos virus que irão surgir e pegar vitaminas.
+o movimento do anticorpo(ninja)  atraves do toque na tela, ele se moverá no eixo x, assim podendo desviar dos virus e capturar as vitaminas.
 
 
 

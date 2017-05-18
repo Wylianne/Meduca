@@ -150,12 +150,12 @@ function loop( event )
           virus.x=170
           virus.y= 150
            
-          local resetBtn = display.newImageRect( tela_perdeu,"sprites/reload.png", 82, 62 )
+          local resetBtn = display.newImageRect( tela_perdeu,"sprites/reload.png", 82, 62)
           resetBtn.x = 220
           resetBtn.y = 340
           resetBtn:addEventListener( "touch", reinicia )
           
-          local back_menu = display.newImageRect(tela_perdeu, "sprites/voltar.png", 82, 62 )          
+          local back_menu = display.newImageRect(tela_perdeu, "sprites/voltar.png", 82, 62)          
           back_menu.x = 100
           back_menu.y = 340
           back_menu:addEventListener(  "touch", backMenu )
