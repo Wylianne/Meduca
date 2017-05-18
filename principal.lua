@@ -135,13 +135,13 @@ function loop( event )
     vitamina[i].y = vitamina[i].y - (velocidade - 0.7)
     
     
-		if osso[i].y < -20 then
+		if osso[i].y < -10 then
 			osso[i].x = fx[rand]
 			osso[i].y = osso[antes].y + 200
       
 		end
     
-    if vitamina[i].y < -20 then
+    if vitamina[i].y < -10 then
 			vitamina[i].x = fx[rand]
 			vitamina[i].y = vitamina[antes].y + 300
 		end
@@ -181,7 +181,10 @@ function loop( event )
   if hasCollidedCircle(esfera,vitamina[i]) then
  
     metros = metros + 2
-  
+    if vitamina[i].y < 90 then
+			vitamina[i].x = fx[rand]
+			vitamina[i].y = vitamina[antes].y + 300
+		end
   end
 
 	end 
@@ -270,7 +273,7 @@ function addVitamina()
           vitamina[i].anchorX = 0.5
           vitamina[i].anchorY = 0
           vitamina[i].x = fx[rand]
-          vitamina[i].y = (screenH+200) + (300*i)
+          vitamina[i].y =(screenH+200) + (300*i)
           vitamina.nome = "VT"
           vitamina[i]:scale(0.5,0.5)
           vitamina[i]:setSequence("subindo")
