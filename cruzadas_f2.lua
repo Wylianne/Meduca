@@ -3,11 +3,11 @@ local composer =  require("composer")
 local cruzadas = require( "cruzadas" )
 
 
-local cruzadasF1 = composer.newScene()
+local cruzadasF2 = composer.newScene()
 
 
    
-function cruzadasF1:create(event)
+function cruzadasF2:create(event)
     SceneGroup = self.view
     
     local grid = {
@@ -45,6 +45,6 @@ function cruzadasF1:create(event)
     
 end
 
-cruzadasF1:addEventListener("create", cruzadasF1)
+cruzadasF2:addEventListener("create", cruzadasF2)
 
-return cruzadasF1
+return cruzadasF2
