@@ -48,8 +48,8 @@ function cruzadas:create(jogoP)
     
      if jogoP == nil then
        error("jogoP can't be nil.")
-    elseif #jogoP == 0 then   
-       error("jogoP can't be  empty.")
+    --elseif #jogoP == 0 then   
+      -- error("jogoP can't be  empty.")
     elseif #jogoP ~= 0 then
          if jogoP.grid == nil then
            error("grid jogo is nil")
