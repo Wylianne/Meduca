@@ -8,34 +8,7 @@ local yCenter = display.contentCenterY
 
 local widthScreen = display.actualContentWidth
 local heightScreen = display.actualContentHeight*2
---
--- Create a 2D array to hold our objects.
-local grid = {
-              {"C","H","A","V","E"," "," "," "},
-              {" "," ","M"," "," "," "," "," "},
-              {" "," ","I"," "," "," "," "," "},
-              {" "," ","G"," "," "," "," "," "},
-              {" "," ","O","L","H","O"," "," "},
-              {" "," "," "," ","O"," "," "," "},
-              {" "," "," "," ","J"," "," "," "},
-              {" "," "," "," ","E"," "," "," "},
-  }
-  
-local dicas = {
-              {" "," "," "," "," "," "," "," "},
-              {" "," "," "," "," "," "," "," "},
-              {" "," "," "," "," "," "," "," "},
-              {" "," "," "," "," "," "," "," "},
-              {" "," "," "," "," "," "," "," "},
-              {" "," "," "," "," "," "," "," "},
-              {" "," "," "," "," "," "," "," "},
-              {" "," "," "," "," "," "," "," "},
-  }
 
-      dicas[1][1] = "Serve para abrir"
-      dicas[2][3] = "Mais que colega"
-      dicas[5][3] = "Ver(substantivo)"
-      dicas[6][5] = "O dia atual"
   
 local pieceSelected
 
@@ -47,13 +20,20 @@ local gbOffsetY
 local dica
 
 local composer =  require("composer") 
+ 
 
 local widget = require("widget")
 local String = require("string")
 
 local color = require("libs.convertcolor")
 
-local cruzadas = composer.newScene()
+local mainLayout = require("mainLayout")
+
+local cruzadas = {}
+
+local jogo
+
+local cruzadasGroup = display.newGroup()
 
 local gridQuadros = {}
 
@@ -64,20 +44,36 @@ alfabeto = {"A", "B", "C", "D", "E", "F", "G", "H", "I",
 posicaoI = nil
 
 
-function cruzadas:create(event)
-    SceneGroup = self.view
+function cruzadas:create(jogoP)
     
+     if jogoP == nil then
+       error("jogoP can't be nil.")
+    elseif #jogoP == 0 then   
+       error("jogoP can't be  empty.")
+    elseif #jogoP ~= 0 then
+         if jogoP.grid == nil then
+           error("grid jogo is nil")
+         elseif  #jogoP.grid~=8  then
+           error("grid jogo has a invalid size (must be 8x8)")
+         else 
+           for i=1, #itens, 1 do
+             if #itens[i]~=8 then
+               error("grid jogo has a invalid size (must be 8x8)")
+             end  
+           end
+           
+         end
+        
+    end
     
-    local background = display.newImageRect( "menu_principal/fundo_menu1.png", 360, 570 )
-    background.x = display.contentCenterX
-    background.y = display.contentCenterY
+    jogo = jogoP
     
-    SceneGroup:insert(background)
+    cruzadasGroup:insert(mainLayout:create("Palavras Cruzadas"))
     
-    local dicaQuadro = display.newRect(0,0,display.actualContentWidth*2, 50)
+    local dicaQuadro = display.newRect(0,10,display.actualContentWidth*2, 50)
     dicaQuadro:setFillColor(1,1,1)
     
-    SceneGroup:insert(dicaQuadro)
+    cruzadasGroup:insert(dicaQuadro)
     
     for i = 1, GRID_HEIGHT do
       gridQuadros[i] = {}
@@ -89,7 +85,7 @@ function cruzadas:create(event)
     local y = display.contentCenterY
 
     checkerBoard = display.newRect(x,y-50, 320, 320)
-    SceneGroup:insert(checkerBoard)
+    cruzadasGroup:insert(checkerBoard)
     --
     -- Calculate some values
 
@@ -102,7 +98,7 @@ function cruzadas:create(event)
     local yPos = 1
     for i=1, 8, 1 do
       for j=1, 8, 1 do
-          gridQuadros[i][j] = spawnPiece(xPos*i, yPos*j,grid[i][j]) 
+          gridQuadros[i][j] = spawnPiece(xPos*i, yPos*j,jogo.palavras[i][j]) 
           gridQuadros[i][j].i = i
           gridQuadros[i][j].j = j
       end
@@ -113,7 +109,9 @@ function cruzadas:create(event)
   
   local btVerifica = createVerificaButton()
   
-  SceneGroup:insert(btVerifica)
+  cruzadasGroup:insert(btVerifica)
+  
+  return cruzadasGroup
 end
  
 function createVerificaButton()
@@ -136,7 +134,8 @@ end
 
 function createDica(texto)
   
-  local dicaQuadro = display.newRect(0,0,display.actualContentWidth*2, 50)
+  local dicaQuadro = display.newRect(0,10,display.actualContentWidth*2, 35)
+  cruzadasGroup:insert(dicaQuadro)
   dicaQuadro:setFillColor(1,1,1)
   
   
@@ -153,6 +152,7 @@ function createDica(texto)
 
  dica = display.newText( options )
  dica:setFillColor(color.hex("555555"))
+ cruzadasGroup:insert(dica)
 
 return dica
 end
@@ -164,13 +164,13 @@ if event.phase=="ended" then
 for i=1, 8, 1 do
       for j=1, 8, 1 do 
         piece = gridQuadros[i][j]
-        if  grid[i][j]~=" " then 
+        if  jogo.palavras[i][j]~=" " then 
           piece:setEnabled(false)
           
-          if piece:getLabel()==grid[i][j] then 
+          if piece:getLabel()==jogo.palavras[i][j] then 
                pontuacao = pontuacao+1
           else
-            piece:setLabel(grid[i][j])
+            piece:setLabel(jogo.palavras[i][j])
             piece:setFillColor(1,0,0,0.2)
           end
           
@@ -219,7 +219,7 @@ end
         
       })
     
-    SceneGroup:insert(piece)
+    cruzadasGroup:insert(piece)
   else
     piece = widget.newButton({
             x = Px,
@@ -235,7 +235,7 @@ end
         
       })
     
-    SceneGroup:insert(piece)
+    cruzadasGroup:insert(piece)
   end
 	return piece
 end
@@ -244,7 +244,7 @@ function viewLabelEvent (event)
     if (event.phase == "ended") then
       local letra = event.target:getLabel()
       if pieceSelected ~=nil then
-        pieceSelected:setLabel(letra)
+         pieceSelected:setLabel(letra)
       end
       
     end
@@ -254,14 +254,14 @@ function clickPiece (event)
     if (event.phase == "ended") then
       
         if pieceSelected ~=nil then
-          pieceSelected:setStrokeColor(color.hex("222222"),1)
-          pieceSelected.strokeWidth = 2
+           pieceSelected:setStrokeColor(color.hex("222222"),1)
+           pieceSelected.strokeWidth = 2
         end  
         
         pieceSelected = event.target
         pieceSelected:setStrokeColor(color.hex("FF4500"))
         pieceSelected.strokeWidth = 4
-        local dica = dicas[pieceSelected.i][pieceSelected.j]
+        local dica = jogo.dicas[pieceSelected.i][pieceSelected.j]
         if dica ~= " "then
           createDica(dica)
         end
@@ -303,16 +303,14 @@ function  montaAlfabeto()
         
         })
 
-        SceneGroup:insert(btnLetras)
+        cruzadasGroup:insert(btnLetras)
     end
 end
-        
 
 
 
 
 
-cruzadas:addEventListener("create", cruzadas)
 return cruzadas
 
 
