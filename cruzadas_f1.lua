@@ -10,8 +10,8 @@ local cruzadasF1 = composer.newScene()
 function cruzadasF1:create(event)
     SceneGroup = self.view
     
-    local grid = {
-              {"C","H","A","V","E"," "," "," "},
+  local grid = {
+              {"E","S","T","R","I","B","O"," "},
               {" "," ","M"," "," "," "," "," "},
               {" "," ","I"," "," "," "," "," "},
               {" "," ","G"," "," "," "," "," "},
@@ -21,7 +21,7 @@ function cruzadasF1:create(event)
               {" "," "," "," ","E"," "," "," "},
   }
   
-   local tips = {
+local dicasDownP = {
               {" "," "," "," "," "," "," "," "},
               {" "," "," "," "," "," "," "," "},
               {" "," "," "," "," "," "," "," "},
@@ -32,13 +32,42 @@ function cruzadasF1:create(event)
               {" "," "," "," "," "," "," "," "},
   }
 
-      tips[1][1] = "Serve para abrir"
-      tips[2][3] = "Mais que colega"
-      tips[5][3] = "Ver(substantivo)"
-      tips[6][5] = "O dia atual"
+local dicasRightP = {
+              {" "," "," "," "," "," "," "," "},
+              {" "," "," "," "," "," "," "," "},
+              {" "," "," "," "," "," "," "," "},
+              {" "," "," "," "," "," "," "," "},
+              {" "," "," "," "," "," "," "," "},
+              {" "," "," "," "," "," "," "," "},
+              {" "," "," "," "," "," "," "," "},
+              {" "," "," "," "," "," "," "," "},
+  }
+
+local setasP = {
+              {" "," "," "," "," "," "," "," "},
+              {" "," "," "," "," "," "," "," "},
+              {" "," "," "," "," "," "," "," "},
+              {" "," "," "," "," "," "," "," "},
+              {" "," "," "," "," "," "," "," "},
+              {" "," "," "," "," "," "," "," "},
+              {" "," "," "," "," "," "," "," "},
+              {" "," "," "," "," "," "," "," "},
+  }
+
+      dicasDownP[1][1] = "Menor osso do corpo humano"
+      dicasRightP[1][3] = "Mais que colega"
+      dicasDownP[5][3] = "Ver(substantivo)"
+      dicasRightP[5][5] = "O dia atual"
+
+      -- aceita down; right; righdown
+      setasP[1][1] = "down"
+      setasP[1][3] = "right"
+      setasP[5][3] = "down"
+      setasP[5][5] = "right"
+     
       
       
-      local jogo = {palavras = grid, dicas = tips}
+      local jogo = {palavras = grid, setas = setasP, dicasDown = dicasDownP ,dicasRight = dicasRightP}
       
       SceneGroup:insert(cruzadas:create(jogo))
     

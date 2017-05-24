@@ -96,11 +96,40 @@ function cruzadas:create(jogoP)
     
     local xPos = 1
     local yPos = 1
+    local setaY  = 47
+    local setaX  = 6
     for i=1, 8, 1 do
       for j=1, 8, 1 do
           gridQuadros[i][j] = spawnPiece(xPos*i, yPos*j,jogo.palavras[i][j]) 
           gridQuadros[i][j].i = i
           gridQuadros[i][j].j = j
+          
+          if (jogo.setas[i][j] ~= " ") then
+                 if (jogo.setas[i][j] == "rightdown") then
+                   size = 12
+                   setaY = setaY + 2
+                   setaX = setaX + 2
+                 else
+                   size = 8
+                 end
+ 
+                 direction = display.newImageRect( "img_jogos/"..jogo.setas[i][j]..".png", size, size )
+                 direction.x = setaX
+                 direction.y = setaY
+                 cruzadasGroup:insert(direction)
+ 
+                 if (jogo.setas[i][j] == "rightdown") then
+                   setaY = setaY - 2
+                   setaX = setaX - 2
+                 end
+             end          
+            setaY = setaY + 40   
+ 
+             if (j == 8) then
+               setaX = setaX + 40
+               setaY = 47
+             end
+
       end
     
   end
@@ -111,26 +140,30 @@ function cruzadas:create(jogoP)
   
   cruzadasGroup:insert(btVerifica)
   
+  local refresh = display.newImageRect( "img_jogos/refresh.png", 35, 35 )
+    refresh.x = display.contentCenterX
+    refresh.y = display.contentCenterY * 2.07
+    cruzadasGroup:insert(refresh)
+  
   return cruzadasGroup
 end
  
 function createVerificaButton()
-
-return widget.newButton(
-   {
-       left = 190,
-       top = 465,
-       label = "Solucionar",
-       shape = "roundedRect",
-       width = 120,
-       height = 40,
-       cornerRadius = 2,
-       labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 0, 0.5 } },
-       fillColor = { default={1,0,0,}, over={1,0.1,0.7,0.4} },
-       strokeWidth = 4,
-       onEvent=verificaJogo
-    })
-end 
+     return widget.newButton({
+           left = display.contentCenterX * 1.3,
+           top = display.contentCenterY*2, 
+           label = "Validar",
+           shape = "roundedRect",
+           width = 90,
+           height = 25,
+           cornerRadius = 0,
+           labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 0, 0.5 } },
+           fillColor = { default={1,0,0,1}, over={1,0,0,0.8} },
+           strokeColor = { default={1,0,0,1}, over={1,0,0,0.8} },
+           strokeWidth = 5,
+           onEvent=verificaJogo
+     })
+ end 
 
 function createDica(texto)
   
@@ -213,8 +246,8 @@ end
             width = CELL_WIDTH,
             height = CELL_HEIGHT,
             labelColor = { default={ 0.2,0.4,0.6 }, over={ 0.2,0.4,0.6, 0.5 } },
-            fillColor = { default={ 0,0,0 }, over={ 0,0,0, } },
-            strokeColor = { default={0.2,0.2,0.2,1}, over={0.2,0.2,0.2,1} },
+            fillColor = { default={ color.hex("336699") }, over={ color.hex("336699") } },
+            strokeColor = { default={color.hex("2d435e")}, over={color.hex("2d435e")} },
             strokeWidth = 2,
         
       })
@@ -229,7 +262,7 @@ end
             width = CELL_WIDTH,
             height = CELL_HEIGHT,
             labelColor = { default={ 0.2,0.4,0.6 }, over={ 0.2,0.4,0.6, 0.5 } },
-            strokeColor = { default={0.2,0.2,0.2,1}, over={0.2,0.2,0.2,1} },
+            strokeColor = { default={color.hex("2d435e")}, over={color.hex("2d435e")} },
             strokeWidth = 2,
             onEvent = clickPiece
         
@@ -251,22 +284,34 @@ function viewLabelEvent (event)
 end
 
 function clickPiece (event)
-    if (event.phase == "ended") then
-      
-        if pieceSelected ~=nil then
+    local dica
+     if (event.phase == "began") then
+         beganX = event.x
+         beganY = event.y
+         if pieceSelected ~=nil then
            pieceSelected:setStrokeColor(color.hex("222222"),1)
            pieceSelected.strokeWidth = 2
-        end  
-        
-        pieceSelected = event.target
-        pieceSelected:setStrokeColor(color.hex("FF4500"))
-        pieceSelected.strokeWidth = 4
-        local dica = jogo.dicas[pieceSelected.i][pieceSelected.j]
-        if dica ~= " "then
-          createDica(dica)
-        end
-    end
-end
+         end  
+     end
+ 
+     if (event.phase == "cancelled") then
+         perX = beganX - event.x
+         perY = beganY - event.y
+ 
+         pieceSelected = event.target
+         pieceSelected:setStrokeColor(color.hex("FF4500"))
+         pieceSelected.strokeWidth = 4
+         
+         if (perX > perY) then
+ 
+           dica = jogo.dicasDown[pieceSelected.i][pieceSelected.j]
+         else
+           dica = jogo.dicasRight[pieceSelected.i][pieceSelected.j]
+         end
+ 
+         createDica(dica)
+     end
+ end
 
 
 
