@@ -176,7 +176,7 @@ function geraPalavra()
     posicaoI = nil
     posicao = {}
 
-
+    
     dica1 = display.newImage( "img_jogos/heart.png" )
     dica1:translate( 30, 250 )
     dica1.id = 1

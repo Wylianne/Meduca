@@ -24,7 +24,7 @@ end
 local tablesetup = [[CREATE TABLE IF NOT EXISTS quebra_ossos (id INTEGER PRIMARY KEY, num_pontos);]]
 db:exec( tablesetup )
 
-local tablesetup = [[CREATE TABLE IF NOT EXISTS quebra_ossos_perguntas (id INTEGER PRIMARY KEY, resposta, dica1, dica2, dica3);]]
+local tablesetup = [[CREATE TABLE IF NOT EXISTS quebra_ossos_perguntas (id INTEGER PRIMARY KEY, palavra, dica1, dica2, dica3);]]
 db:exec( tablesetup )
 
 

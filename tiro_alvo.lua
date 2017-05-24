@@ -81,13 +81,12 @@ end
 
 function endScene(event)
     local params = event.source.params
-    print(params.param.id)
-        if (tonumber(scorePoint.text) > 0) then
-            if (params.param.id == alvo) then
-                scorePoint.text = tonumber(scorePoint.text) - 5
-            end
+    if ((tonumber(scorePoint.text) > 0) and (params.param.isVisible == true)) then
+        if ((params.param.id == alvo)) then
+            scorePoint.text = tonumber(scorePoint.text) - 5
         end
-        params.param:removeSelf()
+    end
+    params.param:removeSelf()
 end
 
 function start( event )
@@ -95,10 +94,7 @@ function start( event )
         btnPlay:removeSelf()
         btnBS:removeSelf()
 
-        
-
         moveScene()
-
     end
 end
 
