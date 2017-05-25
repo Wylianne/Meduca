@@ -43,7 +43,7 @@ end
 function goToPalavrasCruzadas(event)
     if (event.phase == "began") then
         if (menuActive == false) then
-             composer.gotoScene("palavrasCruzadas")
+             composer.gotoScene("fases_cruzadas")
         end
 
     end
