@@ -38,17 +38,24 @@ function slideMenuClose(event)
             transition.to(btnEnviar, {time=400, x = btnEnviar.x - display.actualContentWidth*0.545})
             boxSlide = false
         end
+
+        if (tableJogos) then
+            tableJogos:setIsLocked( false )
+        end
     end
 end
 
 function goToEstatisticas( event )
     if (event.phase == "ended") then
+
+        composer.gotoScene("estatisticas")
         slideMenuClose(event)
     end
 end
 
 function goToComoJogar( event )
     if (event.phase == "ended") then
+        composer.gotoScene("comoJogar")
         slideMenuClose(event)
     end
 end

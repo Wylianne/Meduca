@@ -17,6 +17,12 @@ function secondMenu(event)
     end
 end
 
+function goToClinica(event)
+    if (event.phase == "began") then
+        composer.gotoScene("clinica")
+    end
+end
+
  
 function menuPrincipal:create(event)
     local SceneGroup = self.view
@@ -88,10 +94,11 @@ function menuPrincipal:create(event)
     tiroAlvo.y = display.contentCenterY * 1.045
     SceneGroup:insert(tiroAlvo)
 
-    local palavras_cruzadas = display.newImageRect( "menu_principal/cli.png", display.contentCenterX*0.44, display.contentCenterX*0.45 )
-    palavras_cruzadas.x = display.contentCenterX * 1.63
-    palavras_cruzadas.y = display.contentCenterY * 1.045
-    SceneGroup:insert(palavras_cruzadas) 
+    local clinica = display.newImageRect( "menu_principal/cli.png", display.contentCenterX*0.44, display.contentCenterX*0.45 )
+    clinica.x = display.contentCenterX * 1.63
+    clinica.y = display.contentCenterY * 1.045
+    SceneGroup:insert(clinica) 
+    clinica:addEventListener("touch", goToClinica)
     
     
 
