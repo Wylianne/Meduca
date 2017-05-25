@@ -5,6 +5,8 @@ local widget = require "widget"
 local sheetInfo = require("sprites2")
 local sheet = graphics.newImageSheet( "sprites/sprites2.png", sheetInfo:getSheet() )
 
+local colisao = require("colisao")
+
 local screenW, screenH, halfW = display.contentWidth, display.contentHeight, display.contentWidth*0.5
 local esfera
 local metros = 0
@@ -72,42 +74,20 @@ function toque( event )
  	esfera:setSequence("andando")
  	esfera:play()
  
- 			transition.to(esfera,{time=300,x=halfW-(esfera.xScale + 10),y=100, onComplete=function() 
+ 			transition.to(esfera,{time=300,x=halfW-(esfera.xScale + 30),y=100, onComplete=function() 
  				esfera:setSequence("descendo")
  				esfera:play()
  				caindo = true 
- 				transition.to(esfera,{time=300,x=halfW-(esfera.xScale + 10),y=100,})
+ 				transition.to(esfera,{time=300,x=halfW-(esfera.xScale + 30),y=100,})
  			
  	end})
   
  end
  if caindo == true and event.phase == "began" then
  	esfera:setSequence("descendo")
- 	if esfera.xScale > 0 then esfera.xScale = -0.5 esfera.x = halfW +10 else esfera.xScale = 0.5 esfera.x = halfW -6  end
+ 	if esfera.xScale > 0 then esfera.xScale = -0.5 esfera.x = halfW +20 else esfera.xScale = 0.5 esfera.x = halfW -6  end
  end
 end
-
--- Circle-based collision detection
-local function hasCollidedCircle( obj1, obj2 )
-    if ( obj1 == nil ) then  -- Make sure the first object exists
-        return false
-    end
-    if ( obj2 == nil ) then  -- Make sure the other object exists
-        return false
-    end
-
-    local dx = obj1.x - obj2.x
-    local dy = obj1.y - obj2.y
-
-    local distance = math.sqrt( dx*dx + dy*dy )
-    local objectSize = (obj2.contentWidth/2) + (obj1.contentWidth/2)
-
-    if ( distance < objectSize ) then
-        return true
-    end
-    return false
-end
-
 
 function loop( event )
  if caindo==true then
@@ -138,7 +118,7 @@ function loop( event )
 		end
    
 
-		if hasCollidedCircle(esfera,osso[i]) then
+		if colisao:hasCollidedCircle(esfera,osso[i]) then
 			
       tela_perdeu = display.newGroup()
  
@@ -170,7 +150,7 @@ function loop( event )
     caindo = false
   end
   
-  if hasCollidedCircle(esfera,vitamina[i]) then
+  if colisao:hasCollidedCircle(esfera,vitamina[i]) then
  
     metros = metros + 2
     if vitamina[i].y < 90 then
@@ -189,8 +169,7 @@ end
 
 function reinicia(event) 
   if (event.phase == "ended") then
-    event.target:removeSelf()
-   
+      
     display.remove(tela_perdeu)
     tela_perdeu = nil
    
@@ -198,22 +177,26 @@ function reinicia(event)
     
     velocidade = 4
     metros = 0
-    scene:destroy()     
+    
+    scene:show()     
+    
+   
   end
 end
 
 function backMenu(event)
     if (event.phase == "ended") then
-        event.target:removeSelf()
- 
+        
         display.remove(tela_perdeu)
         tela_perdeu = nil
+        
+        composer.removeScene("jogoBonus")
         composer.gotoScene("menuPrincipal")
  
     end
 end
 
-function backgroud()
+local function backgroud()
    
         background = display.newImage( sheet , sheetInfo:getFrameIndex("background"))      
         background.anchorX = 0
@@ -239,7 +222,7 @@ function backgroud()
         group:insert( fundo1[0])
 end
 
-function addEsfera()
+local function addEsfera()
      
         esfera = display.newSprite( sheet , sequenciaEsfera)
         esfera.anchorX = 1
@@ -253,7 +236,7 @@ function addEsfera()
         group:insert( esfera )
 end
 
-function addOsso()
+local function addOsso()
      
         for i=0, 2 do 
           local rand = math.random( 2 )
@@ -270,7 +253,7 @@ function addOsso()
         end
 end
 
-function addVitamina()
+local function addVitamina()
      
        for i=0, 2 do 
           local rand = math.random( 2 )
@@ -288,7 +271,8 @@ function addVitamina()
 end
   
 function scene:create(event)
-          
+ 
+     
 end
         
 function scene:show( event )
@@ -307,16 +291,10 @@ function scene:show( event )
 end
 
 
-function scene:destroy(event)
-  scene:show()
-end
-
 
 
 scene:addEventListener( "create", scene )
 scene:addEventListener( "show", scene )
-scene:addEventListener( "hide", scene )
-scene:addEventListener( "destroy", scene )
    
 Runtime:addEventListener( "touch", toque )
 

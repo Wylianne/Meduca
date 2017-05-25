@@ -25,6 +25,7 @@ function goToQuebraOssos(event)
         print(menuActive)
         if (menuActive == false) then
             composer.gotoScene("quebra_ossos")
+            
         end
     end
 
