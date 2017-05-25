@@ -23,6 +23,12 @@ function firstMenu(event)
     end
 end
 
+function goToLaboratorio(event)
+    if (event.phase == "began") then
+        composer.gotoScene("lab")
+    end
+end
+
  
 function menuPrincipal:create(event)
     local SceneGroup = self.view
@@ -68,6 +74,7 @@ function menuPrincipal:create(event)
 
     local media = display.newText("7", 80, 45)
     media.x = display.contentCenterX
+    SceneGroup:insert(media)
 
     local soma_ossos = display.newImageRect( "menu_principal/soma_ossos.png", display.contentCenterX*0.44, display.contentCenterX*0.45 )
     soma_ossos.x = display.contentCenterX * 0.37
@@ -100,10 +107,12 @@ function menuPrincipal:create(event)
     tiroAlvo:addEventListener("touch", goToTiroAlvo)
     
     
-    local palavras_cruzadas = display.newImageRect( "menu_principal/lab.png", display.contentCenterX*0.44, display.contentCenterX*0.45 )
-    palavras_cruzadas.x = display.contentCenterX * 1.63
-    palavras_cruzadas.y = display.contentCenterY * 1.045
-    SceneGroup:insert(palavras_cruzadas) 
+    local laboratorio = display.newImageRect( "menu_principal/lab.png", display.contentCenterX*0.44, display.contentCenterX*0.45 )
+    laboratorio.x = display.contentCenterX * 1.63
+    laboratorio.y = display.contentCenterY * 1.045
+    SceneGroup:insert(laboratorio) 
+    laboratorio:addEventListener("touch", goToLaboratorio)
+
     
 
 end
