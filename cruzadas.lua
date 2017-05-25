@@ -123,11 +123,11 @@ function cruzadas:create(jogoP)
                    setaX = setaX - 2
                  end
              end          
-            setaY = setaY + 40   
- 
+            setaX = setaX + 40   
+            
              if (j == 8) then
-               setaX = setaX + 40
-               setaY = 47
+               setaY = setaY + 40
+               setaX = 6
              end
 
       end
@@ -221,7 +221,7 @@ end
 -- Using positions 1, 8 for X and Y, draw the object at the right place in the grid
 --
 
- function spawnPiece( xPos, yPos,letra )
+ function spawnPiece(yPos, xPos,letra )
   
 	if xPos < 1 or xPos > GRID_WIDTH or yPos < 1 or yPos > GRID_HEIGHT then
 		print( "Position out of range:", xPos, yPos )
@@ -292,15 +292,17 @@ function clickPiece (event)
            pieceSelected:setStrokeColor(color.hex("222222"),1)
            pieceSelected.strokeWidth = 2
          end  
+         
+         pieceSelected = event.target
+         pieceSelected:setStrokeColor(color.hex("FF4500"))
+         pieceSelected.strokeWidth = 4
      end
  
      if (event.phase == "cancelled") then
          perX = beganX - event.x
          perY = beganY - event.y
  
-         pieceSelected = event.target
-         pieceSelected:setStrokeColor(color.hex("FF4500"))
-         pieceSelected.strokeWidth = 4
+         
          
          if (perX > perY) then
  

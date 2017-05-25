@@ -11,14 +11,14 @@ function cruzadasF2:create(event)
     SceneGroup = self.view
     
     local grid = {
+              {" "," ","M"," "," "," ","B"," "},
+              {" "," ","A"," "," "," ","I"," "},
+              {" "," ","R"," "," "," ","G"," "},
               {"E","S","T","R","I","B","O"," "},
-              {" "," ","M"," "," "," "," "," "},
-              {" "," ","I"," "," "," "," "," "},
-              {" "," ","G"," "," "," "," "," "},
-              {" "," ","O","L","H","O"," "," "},
-              {" "," "," "," ","O"," "," "," "},
-              {" "," "," "," ","J"," "," "," "},
-              {" "," "," "," ","E"," "," "," "},
+              {" "," ","E"," "," "," ","R"," "},
+              {" "," ","L"," "," "," ","N"," "},
+              {" "," ","O"," "," "," ","A"," "},
+              {" "," "," "," "," "," "," "," "},
   }
   
 local dicasDownP = {
@@ -54,16 +54,14 @@ local setasP = {
               {" "," "," "," "," "," "," "," "},
   }
 
-      dicasDownP[1][1] = "Menor osso do corpo humano"
-      dicasRightP[1][3] = "Mais que colega"
-      dicasDownP[5][3] = "Ver(substantivo)"
-      dicasRightP[5][5] = "O dia atual"
+      dicasRightP[4][1] = "Menor osso do corpo humano"
+      dicasDownP[1][3] = "Ouvido (analogia: ferramenta)"
+      dicasDownP[1][7] = "Ouvido (existe somente nos mamíferos)"
 
       -- aceita down; right; righdown
-      setasP[1][1] = "down"
-      setasP[1][3] = "right"
-      setasP[5][3] = "down"
-      setasP[5][5] = "right"
+      setasP[4][1] = "right"
+      setasP[1][3] = "down"
+      setasP[1][7] = "down"
      
       
       
@@ -73,6 +71,17 @@ local setasP = {
     
     
 end
+
+
+function cruzadasF2:hide(event)
+   if event.phase == "did" then
+      self.view = nil
+   end
+
+end
+
+
+cruzadasF2:addEventListener("hide", cruzadasF2)
 
 cruzadasF2:addEventListener("create", cruzadasF2)
 
