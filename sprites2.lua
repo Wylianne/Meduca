@@ -90,8 +90,8 @@ SheetInfo.sheet =
             -- virus
             x=561,
             y=609,
-            width=71,
-            height=70,
+            width=73,
+            height=75,
 
             sourceX = 0,
             sourceY = 1,
@@ -102,8 +102,8 @@ SheetInfo.sheet =
             -- vitamina
             x=486,
             y=609,
-            width=73,
-            height=72,
+            width=75,
+            height=75,
 
             sourceX = 0,
             sourceY = 0,

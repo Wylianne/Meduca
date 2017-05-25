@@ -13,7 +13,7 @@ local metros = 0
 local texto
 local comecou = false
 local caindo = false
-local velocidade = 5
+local velocidade = 4
 local fundo2 = {}
 local fundo1 = {}
 local osso = {}
@@ -74,18 +74,18 @@ function toque( event )
  	esfera:setSequence("andando")
  	esfera:play()
  
- 			transition.to(esfera,{time=300,x=halfW-(esfera.xScale + 30),y=100, onComplete=function() 
+ 			transition.to(esfera,{time=300,x=halfW-(esfera.xScale + 20),y=100, onComplete=function() 
  				esfera:setSequence("descendo")
  				esfera:play()
  				caindo = true 
- 				transition.to(esfera,{time=300,x=halfW-(esfera.xScale + 30),y=100,})
+ 				transition.to(esfera,{time=300,x=halfW-(esfera.xScale + 20),y=100,})
  			
  	end})
   
  end
  if caindo == true and event.phase == "began" then
  	esfera:setSequence("descendo")
- 	if esfera.xScale > 0 then esfera.xScale = -0.5 esfera.x = halfW +20 else esfera.xScale = 0.5 esfera.x = halfW -6  end
+ 	if esfera.xScale > 0 then esfera.xScale = -0.5 esfera.x = halfW +20 else esfera.xScale = 0.5 esfera.x = halfW -20  end
  end
 end
 
