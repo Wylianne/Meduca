@@ -1,6 +1,6 @@
 
 <p align="center">
-	<img src="https://lh4.googleusercontent.com/m2u2wCbJhIzTv2l7B6Sa29WvvdhlOfKGehCvzee7FiA54oJGOxYai3hyxofcMIni4_21L_PiAn0W5TksQt8s4g=w1366-h700" alt="ROR Resources Cover" style="max-width:1%;">
+	<img src="https://lh3.googleusercontent.com/81andcyRvGiWwNp_NnBzva-_nAV77DAXb7OR2PSSPmllFpTwlzebo5dOQBLk3aGpEX1qXBmj9ar3rmTL541Bx-M0J1Uf8yslzuVElIIhMXUcxnnd23H1tfW12aCvV-sjGLHZXflF_P9uDRoM7gtB1RRju0i5yGRkX8kfo3gEQ9D0depQEdjC99jwqTgbNTMW5DFh1Pzn3jZ3htZ61eSmQSBG9293fsMG01yYgYjhjmwlIO1OQvrAAXUjtVTdE8FFNOU6F4mUf4jEC3QwEitgY54hBBO9C78qXDX90JtLXTd0cUCzBFu-0F5NQS_mGU4mqCKzww12uuyJkgJUN0Pl1EE5oE0Nu00RjhKvnuUIfCFilYc0rjRKAYliUogua9Zc3vJetOol26iIucCRjxMu7-OzQZg0WhGAb8sI-Kt2Kh4AM68rdZVEBlHKpUyz2iU_l5IwSQhf61Tvy0fe6yQlhnTziS5vZ6UVV0aQmVimgaCvQNtPJW4Dx_hEFFygW7siJ0N7efBrG6qa2gI2XpjF_2UfGcaml9Itcu_AnNcc70e06jCqOLaA_PcS7BdAcOrzyMFnTUZKpcCybikxQRtwYIr01QDMiLaXs-n_dOWWzznf8svXBC5Scx0WNM2SCLX3Ck9kSyfIplm6OnYlG1Q9dm60Q5-WNC2wQ8gIMt0hag=w414-h399-no" style="max-width:1%;">
 </p>
 
 <h1 align="center">Meduca</h1>
