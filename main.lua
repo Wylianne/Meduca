@@ -28,19 +28,15 @@ local tablesetup = [[CREATE TABLE IF NOT EXISTS quebra_ossos_perguntas (id INTEG
 db:exec( tablesetup )
 
 
-for row in db:nrows("SELECT * FROM quebra_ossos_perguntas") do
-    local text = row.id
-    print(text)
-end
- 
+
 -- Setup the event listener to catch "applicationExit"
 Runtime:addEventListener( "system", onSystemEvent )
 
 
 
 local composer = require( "composer" )
-composer.gotoScene("login")
+--composer.gotoScene("login")
 --composer.gotoScene("menuPrincipal")
---composer.gotoScene("quebra_ossos")
+composer.gotoScene("quebra_ossos")
 --composer.gotoScene("clinica")
 
