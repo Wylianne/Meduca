@@ -17,20 +17,17 @@ local function onSystemEvent( event )
         	db:close()
         end
     end
-end
+end	
 
-local tablesetup = [[CREATE TABLE IF NOT EXISTS quebra_ossos (id INTEGER PRIMARY KEY, num_pontos);]]
-db:exec( tablesetup )
-
-local tablesetup = [[CREATE TABLE IF NOT EXISTS quebra_ossos_perguntas (id INTEGER PRIMARY KEY, palavra, dica1, dica2, dica3);]]
-db:exec( tablesetup )
-
-verificaQuebraOssosPerguntas()
+verificaBD()
 
 -- Setup the event listener to catch "applicationExit"
 Runtime:addEventListener( "system", onSystemEvent )
 
+native.setProperty( "androidSystemUiVisibility", "immersiveSticky" )
 
 local composer = require( "composer" )
-composer.gotoScene( "login" )
+--composer.gotoScene( "login" )
+composer.gotoScene( "menuPrincipal" )
+--composer.gotoScene( "quiz" )
 

@@ -1,3 +1,5 @@
+native.setProperty( "androidSystemUiVisibility", "immersiveSticky" )
+
 local composer =  require("composer") 
 
 local somaOssos = composer.newScene()
@@ -13,7 +15,12 @@ end
 
 function backMenu(event)
     if (event.phase == "ended") then
-        composer.gotoScene("menuPrincipal")
+        local options =
+            {
+                effect = "slideRight",
+                time = 300
+            }
+        composer.gotoScene("menuPrincipal", options)
     end
 end
 

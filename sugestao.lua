@@ -1,3 +1,5 @@
+native.setProperty( "androidSystemUiVisibility", "immersiveSticky" )
+
 local composer =  require("composer") 
 
 local sugestao = composer.newScene()

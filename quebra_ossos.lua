@@ -1,3 +1,5 @@
+native.setProperty( "androidSystemUiVisibility", "immersiveSticky" )
+
 local composer =  require("composer") 
 
 local quebraOssos = composer.newScene()
@@ -31,24 +33,30 @@ local function geraEsqueleto ()
     elseif (erroLetra == 2) then
         myAnimation:removeSelf()
         sequenceData = {name="seq1", sheet=tornado, start=7, count=7, time=400, loopCount=1 }
-        dica()
+        if (valueDica == 0) then
+            dica()
+        end
     elseif (erroLetra == 3) then
         myAnimation:removeSelf()
         sequenceData = {name="seq1", sheet=tornado, start=13, count=6, time=400, loopCount=1 }
     elseif (erroLetra == 4) then
         myAnimation:removeSelf()
         sequenceData = {name="seq1", sheet=tornado, start=18, count=5, time=400, loopCount=1 }
-        dica()
+        if (valueDica == 1) then
+            dica()
+        end
     elseif (erroLetra == 5) then
         myAnimation:removeSelf()
         sequenceData = {name="seq1", sheet=tornado, start=23, count=7, time=500, loopCount=1 }
-        dica()
+        if (valueDica == 2) then
+            dica()
+        end
     elseif (erroLetra == 6) then
         myAnimation:removeSelf()
         sequenceData = {name="seq1", sheet=tornado, start=29, count=5, time=400, loopCount=1 }
             
         insertPointQB(tonumber(scorePoint.text))
-        timer.performWithDelay( 2000,telaDerrota)
+        timer.performWithDelay( 2000,telaFimJogo)
     end
 
                  
@@ -107,7 +115,10 @@ function dica(event)
                 SceneGroup:insert(dica3)
                 changeScore("dica")                
             end
+            print(valueDica)
         end 
+
+
     end
 end
 
@@ -128,7 +139,7 @@ function valida(letra)
 
         if (acertos == String.len(palavra)) then
             insertPointQB(tonumber(scorePoint.text))
-            timer.performWithDelay(2000, telaVitoria)
+            timer.performWithDelay(2000, telaFimJogo)
         else
             valida(letra)
         end
@@ -275,68 +286,18 @@ function  montaAlfabeto()
     end
 end
 
-function telaDerrota()
+function telaFimJogo()
 
-    myAnimation:removeSelf()
-
-
-    vitoria = display.newImageRect( "img_jogos/fimJogo.png", 250, 350)
-    vitoria.x = display.contentCenterX
-    vitoria.y = display.contentCenterY
-    SceneGroup:insert(vitoria)
-
-
-    textVitoria = display.newText( "Você Perdeu!", 150, 80, "AMAZB__.ttf", 35 )
-    textVitoria.x = display.contentCenterX
-    textVitoria.y = display.contentCenterY * 0.45
-    SceneGroup:insert(textVitoria)
-
-    star = display.newImageRect( "img_jogos/star-0.png", 209.33, 83.66)
-    star.x = display.contentCenterX
-    star.y = display.contentCenterY * 0.7
-    SceneGroup:insert(star)
-
-    skull = display.newImageRect( "img_jogos/esqueleto.png", 31.5, 81.5)
-    skull.x = display.contentCenterX
-    skull.y = display.contentCenterY * 1.08
-    SceneGroup:insert(skull)
-
-    local jogarNovamente = widget.newButton({
-        left = 120,
-        top = 310,   
-        label = "Jogar Novamente",
-        shape = "roundedRect",
-        width = 150,
-        height = 30,
-        cornerRadius = 6,
-        labelColor = { default={ragdogLib.convertHexToRGB("#2e435e")}, over={ ragdogLib.convertHexToRGB("#2e435e") } },
-        fillColor = { default={ragdogLib.convertHexToRGB("#fbcc02")}, over={ragdogLib.convertHexToRGB("#f7d804")} },
-        strokeColor = { default={1,0,0,1}, over={0.8,0.8,1,1} },
-        strokeWidth = 0,
-        onEvent = novoJogo
-
-        
-        
-    })
-
-    jogarNovamente.x = display.contentCenterX
-    jogarNovamente.y = display.contentCenterY*1.55
-    SceneGroup:insert(jogarNovamente)
-
-    scoreFinal = display.newText("Score: "..tostring(scorePoint.text), 300, 200, "AMAZB__.ttf", 35)
-    scoreFinal.x = display.contentCenterX
-    scoreFinal.y = display.contentCenterY * 1.35
-    SceneGroup:insert(scoreFinal)
-end
-
-function telaVitoria()
-
+    mensagem = "Você Venceu!"
     if (tonumber(scorePoint.text) >= 88) then
         img = "img_jogos/star-3.png"
     elseif (tonumber(scorePoint.text) < 88 and tonumber(scorePoint.text) >= 76) then
         img = "img_jogos/star-2.png"
-    else
+    elseif (tonumber(scorePoint.text) < 76 and tonumber(scorePoint.text) >= 1) then
         img = "img_jogos/star-1.png"
+    else
+        mensagem = "Você Perdeu!"
+        img = "img_jogos/star-0.png"
     end  
 
     myAnimation:removeSelf()
@@ -347,7 +308,7 @@ function telaVitoria()
     SceneGroup:insert(vitoria)
 
 
-    textVitoria = display.newText( "Você Venceu!", 150, 80, "AMAZB__.ttf", 35 )
+    textVitoria = display.newText( mensagem, 150, 80, "AMAZB__.ttf", 35 )
     textVitoria.x = display.contentCenterX
     textVitoria.y = display.contentCenterY * 0.45
     SceneGroup:insert(textVitoria)
@@ -402,10 +363,7 @@ function quebraOssos:create(event)
 end
 
 function quebraOssos:show(event)
-    phase = event.phase
-    print(phase)
-
-    if ( phase == "did" or phase == nil ) then
+    if ( event.phase == "did") then
         SceneGroup = self.view
 
         erroLetra = 0

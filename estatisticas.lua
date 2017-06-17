@@ -1,3 +1,5 @@
+native.setProperty( "androidSystemUiVisibility", "immersiveSticky" )
+
 local composer =  require("composer") 
 
 local estatisticas = composer.newScene()

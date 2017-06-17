@@ -1,3 +1,5 @@
+native.setProperty( "androidSystemUiVisibility", "immersiveSticky" )
+
 local GRID_WIDTH = 8
 local GRID_HEIGHT = 8
 local CELL_WIDTH = 40

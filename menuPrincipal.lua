@@ -1,3 +1,5 @@
+native.setProperty( "androidSystemUiVisibility", "immersiveSticky" )
+
 local composer =  require("composer") 
 
 local menuPrincipal = composer.newScene()
@@ -5,6 +7,8 @@ local menuPrincipal = composer.newScene()
 local slide = require("slide_menu")
 
 local widget = require( "widget" )
+
+
 
 local function onMenuTouch(event)
     if ( event.phase == "ended" ) then
@@ -22,10 +26,8 @@ end
 
 function goToQuebraOssos(event)
     if (event.phase == "began") then
-        print(menuActive)
         if (menuActive == false) then
             composer.gotoScene("quebra_ossos")
-            
         end
     end
 
@@ -35,7 +37,15 @@ end
 function goToSomaOssos(event)
     if (event.phase == "began") then
         if (menuActive == false) then
-            composer.gotoScene("soma_ossos")
+            local options =
+            {
+                effect = "slideLeft",
+                time = 300,
+                params = {
+                    jogo = "somaOssos"
+                }
+            }
+            composer.gotoScene("geraFases", options)
         end
     end
 end

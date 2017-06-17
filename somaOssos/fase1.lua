@@ -36,7 +36,17 @@ end
 
 function backMenu(event)
     if (event.phase == "ended") then
-        composer.gotoScene("soma_ossos")
+
+        local options =
+        {
+            effect = "slideRight",
+            time = 300,
+            params = {
+                jogo = nomeJogo
+            }
+        }
+
+        composer.gotoScene("geraFases", options)
     end
 end
 
@@ -151,6 +161,8 @@ end
 function faseUm:create(event)
     SceneGroup = self.view
     
+    nomeJogo = event.params.jogo
+
     local background = display.newImageRect( "menu_principal/fundo_menu1.png", display.contentCenterX*2, display.contentCenterY*2.37 )
     background.x = display.contentCenterX
     background.y = display.contentCenterY

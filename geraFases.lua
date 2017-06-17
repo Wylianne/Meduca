@@ -2,9 +2,16 @@ native.setProperty( "androidSystemUiVisibility", "immersiveSticky" )
 
 local composer =  require("composer") 
 
-local palavrasCruzadas = composer.newScene()
+local somaOssos = composer.newScene()
 
 local slide = require("slide_menu")
+
+
+
+local sqlite3 = require( "sqlite3" )
+local path = system.pathForFile( "meduca.db", system.DocumentsDirectory )
+local db = sqlite3.open( path ) 
+
 
 local function onMenuTouch(event)
     if ( event.phase == "ended" ) then
@@ -15,25 +22,39 @@ end
 
 function backMenu(event)
     if (event.phase == "ended") then
-        composer.gotoScene("menuPrincipal")
+        local options =
+            {
+                effect = "slideRight",
+                time = 300
+            }
+        composer.gotoScene("menuPrincipal", options)
     end
 end
 
 function goToFase(event)
     if (event.phase == "ended") then
-        if (event.target.id == 1) then
-            composer.gotoScene("palavrasCruzadas.faseUm")
-        end
+
+        local options =
+        {
+            effect = "slideLeft",
+            time = 300,
+            params = {
+                jogo = "somaOssos"
+            }
+        }
+
+        faseJogo = nomeJogo..".fase"..event.target.id
+        composer.gotoScene(faseJogo, options)
     end
 end
 
-function geraFases()
+function geraFases(qnt_fases, qnt_fases_d)
     iniFase = display.contentCenterX - 100
     yFaseB = 70
     yFaseF = 60
     cont = 0
 
-    for i=1, 12, 1 do
+    for i=1, qnt_fases, 1 do
         --+110
         if (i == 4) then
             yFaseB = 180
@@ -52,7 +73,7 @@ function geraFases()
             cont = 0
         end
 
-        if (i <= 1) then  -- verifica no bd até que fase esta desbloqueado
+        if (i <= qnt_fases_d) then 
             local faseBack = display.newRoundedRect(display.contentCenterX * 1.05, 30, 70,90,12)
             faseBack:setFillColor(0.5,0.6,1, 0.5)
             faseBack.y = yFaseB
@@ -117,8 +138,15 @@ function geraFases()
 end
 
 
-function palavrasCruzadas:create(event)
+function somaOssos:create(event)
     SceneGroup = self.view
+
+    nomeJogo = event.params.jogo
+
+    for row in db:nrows("SELECT qnt_fases, qnt_fases_d FROM fases where nome_jogo = '"..nomeJogo.."'") do
+       qnt_fases = row.qnt_fases
+       qnt_fases_d = row.qnt_fases_d
+    end
     
     local background = display.newImageRect( "menu_principal/fundo_menu1.png", display.contentCenterX*2, display.contentCenterY*2.37 )
     background.x = display.contentCenterX
@@ -130,7 +158,7 @@ function palavrasCruzadas:create(event)
     barTop.x = display.contentCenterX
     SceneGroup:insert(barTop)
 
-    nameApp = display.newText("Meduca - Palavras Cruzadas", 0, -30)
+    nameApp = display.newText("Meduca - Soma Ossos", 0, -30)
     nameApp:setFillColor(1,1,1)
     nameApp.x = display.contentCenterX
     SceneGroup:insert(nameApp)
@@ -147,12 +175,12 @@ function palavrasCruzadas:create(event)
     SceneGroup:insert(back_menu)
     back_menu:addEventListener( "touch", backMenu )
 
-    geraFases()
+    geraFases(qnt_fases, qnt_fases_d)
     
 
 end
 
 
 
-palavrasCruzadas:addEventListener("create", palavrasCruzadas)
-return palavrasCruzadas
+somaOssos:addEventListener("create", somaOssos)
+return somaOssos
