@@ -12,15 +12,27 @@ local ragdogLib = require "ragdogLib";
 
 lotsOfText = ""
 
-jogos = {"Soma Ossos","Palavras Cruzadas","Quebra Ossos","Quiz","Blood Invaded","Análises Biológicas","Clínica"}
+jogos = {"SOMA OSSOS","","PALAVRAS CRUZAZDAS","","QUEBRA OSSOS","","QUIZ", "","BLOOD INVADER INVADED" ,"","JOGO BONUS","","ANÁLISES BIOLGICASs","","CLÍNICAS"}
 
 descricao  = {"Neste jogo será solicitado os ossos que compõem uma determinada parte do corpo, por exemplo, o jogo solicita os ossos que compõem a perna, ela possui dois ossos, a tíbia e a fíbula, na tela do jogo aparecerá vários ossos e o jogador terá que selecionar esses dois, quando o osso é selecionado ele se move da parte onde aparecem as possibilidades e aparece na sentença. \nOs ossos que aparecem nas possibilidades são aleatórios, dessa forma o jogador pode solicitar no máximo três vezes que as possibilidades sejam refeitas.",
+              "-",
               "Jogo comum de palavras cruzadas, onde o jogador deve adivinhar quais palavras preenchem os espaços em branco. Este jogo foi dividido em fases. \nPara visualizar as dicas é necessário clicar nos espaços que contém alguma seta e arrastar o dedo no sentido da dica (seta) que deseja visualizar, pois alguns espaços possuem mais de uma dica. As dicas são exibidas no topo da tela. \nClicando no botão de validar o jogador poderá verificar se as letras inseridas estão corretas, só será possível verificar as letras no máximo 3 vezes por jogo. O jogador poderá também reiniciar o jogo clicando no botão ao lado esquerdo de validar, se clicar nesse botão tudo que foi preenchido será apagado inclusive a pontuação atual do jogo.",
-              "Quebra Ossos",
+              "-",
+              "O jogo quebra ossos é basicamente o jogo da forca, onde o jogador deverá adivinhar letra por letra que corresponde a palavra, preenchendo assim as lacunas que satisfazem as dicas dadas. No jogo original, a cada letra errada que o jogador escolhe um boneco de linhas é desenhado na forca e o jogador perde se todo o boneco for desenhado, no quebra ossos a sequencia é oposta, assim o jogador perde se o desenho da caveira sumir da tela.",
+              "-",
               "O jogador deve selecionar uma resposta para que os botões de próxima pergunta e finalizar o jogo aparecam, somente é possível selecionar uma única resposta correta. \nQuando a responta for selecionada o seu fundo fica verde.",
-              "Blood Invaded",
-              "Análises Biológicas",
-              "Clínica"}
+              "-",
+              "Este jogo é baseado em jogos arcade de tiro, no jogo ossos invadiram a corrente sanguínea e para impedir que eles obstruam as veias é necessário eliminá-los, mas o jogador só pode eliminar determinados ossos. O nome do osso que deve ser eliminado aparece no topo da tela e ele muda constantemente, para eliminar os ossos basta tocá-los e eles automaticamente desaparecem e o jogador ganha ponto. O jogo possui um sistema de tempo e à medida que o tempo passa o osso que deve ser eliminado vai mudando e a velocidade que eles passam pelas veias aumenta. Ao clicar em algum organismo errado, como plasma, hemácias, leucócitos e plaqueta, o jogador perde ponto, ele perderá o jogo se sua pontuação chegar a zero ou o tempo esgotar. ",
+              "-",
+              
+              "O jogo consiste que o corpo está infectado por virus, o anticorpo(ninja) deverá desviar dos virus que irão surgir e pegar vitaminas. o movimento do anticorpo(ninja)  atraves do toque na tela, ele se moverá no eixo x, assim podendo desviar dos virus e capturar as vitaminas",
+              "-",
+              
+              "Análises Biológicas\n",
+              "-",
+              "Clínica\n"}
+            
+
 
 local function onMenuTouch(event)
     if ( event.phase == "ended" ) then
@@ -92,15 +104,15 @@ function comoJogar:create(event)
 
     SceneGroup:insert(scrollView)
 
-    for i=1, 7, 1 do
+    for i=1, 15, 1 do
         lotsOfText = lotsOfText..jogos[i].."\n\n"..descricao[i].."\n\n\n"
     end
 
 
-    lotsOfTextObject = display.newText(lotsOfText, 0, 0, 260, 0, "Helvetica", 14)
+    lotsOfTextObject = display.newText(lotsOfText, 0, 0, 290, 0, "Helvetica", 14)
     lotsOfTextObject:setTextColor(ragdogLib.convertHexToRGB("#336699"))
     lotsOfTextObject.x = display.contentCenterX
-    lotsOfTextObject.y = 595
+    lotsOfTextObject.y = 775
     scrollView:insert(lotsOfTextObject)
 
 end

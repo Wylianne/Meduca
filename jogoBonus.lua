@@ -5,7 +5,7 @@ local scene = composer.newScene()
 local widget = require "widget"
 
 local sheetInfo = require("sprites2")
-local sheet = graphics.newImageSheet( "sprites/sprites2.png", sheetInfo:getSheet() )
+local sheet = graphics.newImageSheet( "img_jogos/sprites/sprites2.png", sheetInfo:getSheet() )
 
 local colisao = require("colisao")
 
@@ -128,24 +128,24 @@ function loop( event )
           background_perdeu.anchorX = 0
           background_perdeu.anchorY = 0
         
-          virus = display.newImage( tela_perdeu, "sprites/esfera-perde.png")
+          virus = display.newImage( tela_perdeu, "img_jogos/sprites/esfera-perde.png")
           virus.x=170
           virus.y= 150
            
-          local resetBtn = display.newImageRect( tela_perdeu,"sprites/reload.png", 82, 62)
+          local resetBtn = display.newImageRect( tela_perdeu,"img_jogos/sprites/reload.png", 82, 62)
           resetBtn.x = 220
           resetBtn.y = 340
           resetBtn:addEventListener( "touch", reinicia )
           
-          local back_menu = display.newImageRect(tela_perdeu, "sprites/voltar.png", 82, 62)          
+          local back_menu = display.newImageRect(tela_perdeu, "img_jogos/sprites/voltar.png", 82, 62)          
           back_menu.x = 100
           back_menu.y = 340
           back_menu:addEventListener(  "touch", backMenu )
         
     
-          background_perdeu:setFillColor( 0, 0, 0 ,0.88)
+          background_perdeu:setFillColor( 0, 0, 0 ,0.89)
           background_perdeu = display.newText( tela_perdeu, "Você Perdeu" , 170, 220, native.systemFont, 26 )
-          background_perdeu = display.newText( tela_perdeu, "Sua pontuação foi: ".. texto.text , 170, 240, native.systemFont, 26 )
+          background_perdeu = display.newText( tela_perdeu, "Sua pontuação foi: ".. texto.text , 170, 245, native.systemFont, 26 )
           
          
           
@@ -199,6 +199,10 @@ function backMenu(event)
 end
 
 local function backgroud()
+        nameApp = display.newText("Meduca - Jogo Bonus", 0, -15)
+        nameApp:setFillColor(1,1,1)
+        nameApp.x = display.contentCenterX
+        group:insert(nameApp)
    
         background = display.newImage( sheet , sheetInfo:getFrameIndex("background"))      
         background.anchorX = 0
@@ -287,9 +291,6 @@ function scene:show( event )
       texto = display.newText( "0", 50, 20, native.systemFont, 26 )
       texto:setFillColor( 255, 255, 255 )
       group:insert( texto)
-      
-      
-     
 end
 
 
