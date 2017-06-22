@@ -6,6 +6,8 @@ local menuPrincipal = composer.newScene()
 
 local slide = require("slide_menu")
 
+local ragdogLib = require "ragdogLib";
+
 local function onMenuTouch(event)
     if ( event.phase == "ended" ) then
         slide:onMenuTouch()
@@ -74,7 +76,9 @@ function menuPrincipal:create(event)
     star.y = 40
     SceneGroup:insert(star)
 
-    local media = display.newText("7", 80, 45)
+
+    local media = display.newText("7", 80, 45, native.systemFont, 30)
+    media:setFillColor(ragdogLib.convertHexToRGB("#ff9c36"))
     media.x = display.contentCenterX
     SceneGroup:insert(media)
 

@@ -4,22 +4,30 @@ function verificaBD()
 	local path = system.pathForFile( "meduca.db", system.DocumentsDirectory )
 	local db = sqlite3.open( path ) 
 
-	local tablesetup = [[CREATE TABLE IF NOT EXISTS quebra_ossos (id INTEGER PRIMARY KEY, num_pontos);]]
-	db:exec( tablesetup )
+    -- Preenche tabela de fases dos jogos
+	for row in db:nrows("SELECT count(*) as count FROM fases") do
+        id_pergunta = tonumber(row.count)
+    end
 
-	local tablesetup = [[CREATE TABLE IF NOT EXISTS quebra_ossos_perguntas (id INTEGER PRIMARY KEY, palavra, dica1, dica2, dica3);]]
-	db:exec( tablesetup )
-
-	local tablesetup = [[CREATE TABLE IF NOT EXISTS quiz_perguntas (id INTEGER PRIMARY KEY, pergunta, alter_1, alter_2, alter_3, alter_4, alter_5, resposta);]]
-	db:exec( tablesetup )	
-
-	local tablesetup = [[CREATE TABLE IF NOT EXISTS `fases` (`id` INTEGER NOT NULL, `nome_jogo`	TEXT NOT NULL, `qnt_fases`	INTEGER NOT NULL, `qnt_fases_d`	INTEGER NOT NULL, PRIMARY KEY(`id`);]]
-	db:exec( tablesetup )
-	
-	local tablefill = [[INSERT INTO `fases` VALUES (1,'somaOssos',3,1);]]
-   	db:exec( tablefill )
+    if (id_pergunta == 0) then
+    	local tablefill = [[INSERT INTO fases VALUES (1,'somaOssos',3,1);]]
+   		db:exec( tablefill )
+    end
 
 
+    -- Preenche fases do quebra ossos
+	for row in db:nrows("SELECT count(*) as count FROM fases_quebra_ossos") do
+        id_pergunta = tonumber(row.count)
+    end
+
+    if (id_pergunta == 0) then
+    	local tablefill = [[INSERT INTO `fases_quebra_ossos` VALUES (1,1,2,'Perna','tibia','fibula','','img_jogos/perna.png');
+							INSERT INTO `fases_quebra_ossos` VALUES (2,2,2,'Antebraço','ulna','radio','','img_jogos/antebraço.png');]]
+   		db:exec( tablefill )
+    end
+
+
+    -- Preenche perguntas do quebra ossos
 	for row in db:nrows("SELECT count(*) as count FROM quebra_ossos_perguntas") do
         id_pergunta = tonumber(row.count)
     end
@@ -62,6 +70,7 @@ function verificaBD()
     	db:exec( tablefill )
     end
 
+    -- Preenche perguntas do quiz
     for row in db:nrows("SELECT count(*) as count FROM quiz_perguntas") do
         id_pergunta = tonumber(row.count)
     end

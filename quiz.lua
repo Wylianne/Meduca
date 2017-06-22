@@ -262,38 +262,32 @@ function telaFimJogo()
 
     
     if (acertos >= 85.0) then
-        mensagem = "Impressionante!"
+        imgFundo = "img_jogos/fimJogo-1.png"
         img = "img_jogos/star-3.png"
     elseif (tonumber(acertos) < 85.0 and tonumber(acertos) >= 70.0) then
-        mensagem = "Maravilhoso!"
+        imgFundo = "img_jogos/fimJogo-2.png"
         img = "img_jogos/star-2.png"
     elseif (tonumber(acertos) < 70.0 and tonumber(acertos) >= 0.1) then
-        mensagem = "Vamos Treinar?"
+        imgFundo = "img_jogos/fimJogo-3.png"
         img = "img_jogos/star-1.png"
     else
-        mensagem = "Vamos Treinar?"
+        imgFundo = "img_jogos/fimJogo-3.png"
         img = "img_jogos/star-0.png"
     end  
 
     myAnimation:removeSelf()
 
-    vitoria = display.newImageRect( "img_jogos/fimJogo.png", 250, 350)
+    vitoria = display.newImageRect( imgFundo, 250, 350)
     vitoria.x = display.contentCenterX
     vitoria.y = display.contentCenterY
     SceneGroup:insert(vitoria)
-
-
-    textVitoria = display.newText( mensagem, 150, 80, "AMAZB__.ttf", 35 )
-    textVitoria.x = display.contentCenterX
-    textVitoria.y = display.contentCenterY * 0.45
-    SceneGroup:insert(textVitoria)
 
     star = display.newImageRect( img, 209.33, 83.66)
     star.x = display.contentCenterX
     star.y = display.contentCenterY * 0.7
     SceneGroup:insert(star)
 
-    skull = display.newImageRect( "img_jogos/teste.png", 90, 81.5)
+    skull = display.newImageRect( "img_jogos/teste.png", 100, 81.5)
     skull.x = display.contentCenterX
     skull.y = display.contentCenterY * 1.08
     SceneGroup:insert(skull)
@@ -319,9 +313,9 @@ function telaFimJogo()
     jogarNovamente.y = display.contentCenterY*1.55
     SceneGroup:insert(jogarNovamente)
 
-    scoreFinal = display.newText("Score: "..acertos, 300, 200, "AMAZB__.ttf", 35)
-    scoreFinal.x = display.contentCenterX
-    scoreFinal.y = display.contentCenterY * 1.35
+    scoreFinal = display.newText(acertos, 300, 200, native.systemFont, 26)
+    scoreFinal.x = display.contentCenterX *1.25
+    scoreFinal.y = display.contentCenterY * 1.36
     SceneGroup:insert(scoreFinal)
 end
 

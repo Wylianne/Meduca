@@ -9,6 +9,9 @@ local slide = require("slide_menu")
 local widget = require( "widget" )
 
 
+local ragdogLib = require "ragdogLib";
+
+
 
 local function onMenuTouch(event)
     if ( event.phase == "ended" ) then
@@ -118,7 +121,8 @@ function menuPrincipal:create(event)
     star.y = 40
     SceneGroup:insert(star)
 
-    local media = display.newText("7", 80, 45)
+    local media = display.newText("7", 80, 45, native.systemFont, 30)
+    media:setFillColor(ragdogLib.convertHexToRGB("#ff9c36"))
     media.x = display.contentCenterX
     SceneGroup:insert(media)
 
@@ -153,11 +157,11 @@ function menuPrincipal:create(event)
     SceneGroup:insert(tiroAlvo)
     tiroAlvo:addEventListener("touch", goToTiroAlvo)
     
-    local jogoBonus = display.newImageRect( "menu_principal/bonus.png", display.contentCenterX*0.44, display.contentCenterX*0.45 )
-    jogoBonus.x = display.contentCenterX * 1.63
-    jogoBonus.y = display.contentCenterY * 1.045
-    SceneGroup:insert(jogoBonus)
-    jogoBonus:addEventListener("touch", JogoBonus)
+    -- local jogoBonus = display.newImageRect( "menu_principal/bonus.png", display.contentCenterX*0.44, display.contentCenterX*0.45 )
+    -- jogoBonus.x = display.contentCenterX * 1.63
+    -- jogoBonus.y = display.contentCenterY * 1.045
+    -- SceneGroup:insert(jogoBonus)
+    -- jogoBonus:addEventListener("touch", JogoBonus)
 
 end
 

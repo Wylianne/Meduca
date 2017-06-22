@@ -288,30 +288,26 @@ end
 
 function telaFimJogo()
 
-    mensagem = "Você Venceu!"
     if (tonumber(scorePoint.text) >= 88) then
+        imgFundo = "img_jogos/fimJogo-1.png"
         img = "img_jogos/star-3.png"
     elseif (tonumber(scorePoint.text) < 88 and tonumber(scorePoint.text) >= 76) then
+        imgFundo = "img_jogos/fimJogo-2.png"
         img = "img_jogos/star-2.png"
     elseif (tonumber(scorePoint.text) < 76 and tonumber(scorePoint.text) >= 1) then
+        imgFundo = "img_jogos/fimJogo-3.png"
         img = "img_jogos/star-1.png"
     else
-        mensagem = "Você Perdeu!"
+        imgFundo = "img_jogos/fimJogo-3.png"
         img = "img_jogos/star-0.png"
     end  
 
     myAnimation:removeSelf()
 
-    vitoria = display.newImageRect( "img_jogos/fimJogo.png", 250, 350)
+    vitoria = display.newImageRect( imgFundo, 250, 350)
     vitoria.x = display.contentCenterX
     vitoria.y = display.contentCenterY
     SceneGroup:insert(vitoria)
-
-
-    textVitoria = display.newText( mensagem, 150, 80, "AMAZB__.ttf", 35 )
-    textVitoria.x = display.contentCenterX
-    textVitoria.y = display.contentCenterY * 0.45
-    SceneGroup:insert(textVitoria)
 
     star = display.newImageRect( img, 209.33, 83.66)
     star.x = display.contentCenterX
@@ -347,9 +343,9 @@ function telaFimJogo()
     jogarNovamente.y = display.contentCenterY*1.55
     SceneGroup:insert(jogarNovamente)
 
-    scoreFinal = display.newText("Score: "..tostring(scorePoint.text), 300, 200, "AMAZB__.ttf", 35)
-    scoreFinal.x = display.contentCenterX
-    scoreFinal.y = display.contentCenterY * 1.35
+    scoreFinal = display.newText(tostring(scorePoint.text), 300, 200, native.systemFont, 26)
+    scoreFinal.x = display.contentCenterX *1.25
+    scoreFinal.y = display.contentCenterY * 1.36
     SceneGroup:insert(scoreFinal)
 end
 

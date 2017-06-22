@@ -2,7 +2,7 @@ native.setProperty( "androidSystemUiVisibility", "immersiveSticky" )
 
 local composer =  require("composer") 
 
-local somaOssos = composer.newScene()
+local geraFases = composer.newScene()
 
 local slide = require("slide_menu")
 
@@ -32,23 +32,28 @@ function backMenu(event)
 end
 
 function goToFase(event)
-    if (event.phase == "ended") then
+    if (event.phase == "began") then
+        if (geraF == 0) then
 
-        local options =
-        {
-            effect = "slideLeft",
-            time = 300,
-            params = {
-                jogo = "somaOssos"
+            geraF = 1
+            local options =
+            {
+                effect = "slideLeft",
+                time = 300,
+                params = {
+                    jogo = "somaOssos",
+                    nivel = event.target.id,
+                    qnt_fases_d = qnt_fases_d
+                }
             }
-        }
 
-        faseJogo = nomeJogo..".fase"..event.target.id
-        composer.gotoScene(faseJogo, options)
+            faseJogo = nomeJogo..".fase1"
+            composer.gotoScene(faseJogo, options)
+        end
     end
 end
 
-function geraFases(qnt_fases, qnt_fases_d)
+function geraFasesIco(qnt_fases, qnt_fases_d)
     iniFase = display.contentCenterX - 100
     yFaseB = 70
     yFaseF = 60
@@ -138,49 +143,53 @@ function geraFases(qnt_fases, qnt_fases_d)
 end
 
 
-function somaOssos:create(event)
-    SceneGroup = self.view
+function geraFases:show(event)
+    if (event.phase == "will") then
+        geraF = 0
+        SceneGroup = self.view
 
-    nomeJogo = event.params.jogo
+        nomeJogo = event.params.jogo
 
-    for row in db:nrows("SELECT qnt_fases, qnt_fases_d FROM fases where nome_jogo = '"..nomeJogo.."'") do
-       qnt_fases = row.qnt_fases
-       qnt_fases_d = row.qnt_fases_d
+        for row in db:nrows("SELECT qnt_fases, qnt_fases_d FROM fases where nome_jogo = '"..nomeJogo.."'") do
+           qnt_fases = row.qnt_fases
+           qnt_fases_d = row.qnt_fases_d
+        end
+        
+        local background = display.newImageRect( "menu_principal/fundo_menu1.png", display.contentCenterX*2, display.contentCenterY*2.37 )
+        background.x = display.contentCenterX
+        background.y = display.contentCenterY
+        SceneGroup:insert(background)
+
+        local barTop = display.newRect(0,-30,320,30)
+        barTop:setFillColor(0.2,0.4,0.6)
+        barTop.x = display.contentCenterX
+        SceneGroup:insert(barTop)
+
+        nameApp = display.newText("Meduca - Soma Ossos", 0, -30)
+        nameApp:setFillColor(1,1,1)
+        nameApp.x = display.contentCenterX
+        SceneGroup:insert(nameApp)
+
+        local menu_disabled = display.newImageRect( "menu_principal/menu_disabled.png", 25, 25 )
+        menu_disabled.x =  display.contentCenterX * 0.1
+        menu_disabled.y = -30
+        SceneGroup:insert(menu_disabled)
+        menu_disabled:addEventListener( "touch", onMenuTouch )
+
+        local back_menu = display.newImageRect( "menu_principal/arrows-left.png", 25, 25 )
+        back_menu.x = display.contentCenterX * 1.9
+        back_menu.y = -30
+        SceneGroup:insert(back_menu)
+        back_menu:addEventListener( "touch", backMenu )
+
+        geraFasesIco(qnt_fases, qnt_fases_d)
     end
-    
-    local background = display.newImageRect( "menu_principal/fundo_menu1.png", display.contentCenterX*2, display.contentCenterY*2.37 )
-    background.x = display.contentCenterX
-    background.y = display.contentCenterY
-    SceneGroup:insert(background)
+end
 
-    local barTop = display.newRect(0,-30,320,30)
-    barTop:setFillColor(0.2,0.4,0.6)
-    barTop.x = display.contentCenterX
-    SceneGroup:insert(barTop)
-
-    nameApp = display.newText("Meduca - Soma Ossos", 0, -30)
-    nameApp:setFillColor(1,1,1)
-    nameApp.x = display.contentCenterX
-    SceneGroup:insert(nameApp)
-
-    local menu_disabled = display.newImageRect( "menu_principal/menu_disabled.png", 25, 25 )
-    menu_disabled.x =  display.contentCenterX * 0.1
-    menu_disabled.y = -30
-    SceneGroup:insert(menu_disabled)
-    menu_disabled:addEventListener( "touch", onMenuTouch )
-
-    local back_menu = display.newImageRect( "menu_principal/arrows-left.png", 25, 25 )
-    back_menu.x = display.contentCenterX * 1.9
-    back_menu.y = -30
-    SceneGroup:insert(back_menu)
-    back_menu:addEventListener( "touch", backMenu )
-
-    geraFases(qnt_fases, qnt_fases_d)
-    
-
+function geraFases:hide( event )
+    -- body
 end
 
 
-
-somaOssos:addEventListener("create", somaOssos)
-return somaOssos
+geraFases:addEventListener("show", geraFases)
+return geraFases
