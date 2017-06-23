@@ -15,14 +15,14 @@ function verificaBD()
     end
 
 
-    -- Preenche fases do quebra ossos
-	for row in db:nrows("SELECT count(*) as count FROM fases_quebra_ossos") do
+    -- Preenche fases do soma ossos
+	for row in db:nrows("SELECT count(*) as count FROM fases_soma_ossos") do
         id_pergunta = tonumber(row.count)
     end
 
     if (id_pergunta == 0) then
-    	local tablefill = [[INSERT INTO `fases_quebra_ossos` VALUES (1,1,2,'Perna','tibia','fibula','','img_jogos/perna.png');
-							INSERT INTO `fases_quebra_ossos` VALUES (2,2,2,'Antebraço','ulna','radio','','img_jogos/antebraço.png');]]
+    	local tablefill = [[INSERT INTO `fases_soma_ossos` VALUES (1,1,2,'Perna','tibia','fibula','','img_jogos/perna.png');
+							INSERT INTO `fases_soma_ossos` VALUES (2,2,2,'Antebraço','ulna','radio','','img_jogos/antebraço.png');]]
    		db:exec( tablefill )
     end
 

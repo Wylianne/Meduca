@@ -24,7 +24,7 @@ end
 local tablesetup = [[CREATE TABLE IF NOT EXISTS fases (id INTEGER PRIMARY KEY, nome_jogo, qnt_fases INTEGER, qnt_fases_d INTEGER);]]
 db:exec( tablesetup )
 
-local tablesetup = [[CREATE TABLE IF NOT EXISTS fases_quebra_ossos (id INTEGER PRIMARY KEY, num_fase INTEGER NOT NULL, qnt_respostas INTEGER NOT NULL, resposta1 TEXT, resposta2 TEXT, resposta3 TEXT, img_pergunta TEXT);]]
+local tablesetup = [[CREATE TABLE IF NOT EXISTS fases_soma_ossos (id INTEGER PRIMARY KEY, num_fase INTEGER NOT NULL, qnt_respostas INTEGER NOT NULL, dica TEXT, resposta1 TEXT, resposta2 TEXT, resposta3 TEXT, img_pergunta TEXT);]]
 db:exec( tablesetup )
 
 local tablesetup = [[CREATE TABLE IF NOT EXISTS quebra_ossos (id INTEGER PRIMARY KEY, num_pontos);]]

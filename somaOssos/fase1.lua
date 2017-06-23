@@ -52,13 +52,16 @@ local function misturaAlternativas( t )
 end
 
 function changeFaseDes(ponto)
-    fasesDes = qnt_fases_d + 1
-    local tablefill = [[UPDATE fases SET qnt_fases_d = ]]..fasesDes..
-                      [[ WHERE nome_jogo = ']]..nomeJogo..
-                      [[' and qnt_fases_d = ]]..nivel..
-                      [[; ]]
 
-    db:exec( tablefill )
+    if (qnt_fases_d == nivel) then
+        fasesDes = qnt_fases_d + 1
+        local tablefill = [[UPDATE fases SET qnt_fases_d = ]]..fasesDes..
+                          [[ WHERE nome_jogo = ']]..nomeJogo..
+                          [[' and qnt_fases_d = ]]..nivel..
+                          [[; ]]
+
+        db:exec( tablefill )
+    end
 end
 
 local function onMenuTouch(event)
@@ -232,7 +235,7 @@ local function changeTime()
         if (progress <= 0.05 and progress >= 0.0) then
             progress = 0.0
             if (goOut == 0) then
-                telaFimJogo()
+                gameOver()
             end
         else
             progress = progress - 0.06109
@@ -248,104 +251,155 @@ local function changeTime()
     end
 end
 
-function telaFimJogo()
+function telaFimJogo(event)
+    if (event.phase == "ended") then
+        changeFaseDes()
 
-    changeFaseDes()
+        fimJogo = 1
 
-    fimJogo = 1
+            SceneGroup:insert(groupOpRes)
+
+            SceneGroup:insert(groupSelecionado)
+        --end
+        calculo = 0
+
+            imgFundo = "img_jogos/fimJogo-3.png"
+            img = "img_jogos/star-0.png"
+
+        if (timeProgress:getProgress() >= 0.50 and acertos == totalRespostas ) then
+            calculo = 85 + (100 / (130 * timeProgress:getProgress()))
+            imgFundo = "img_jogos/fimJogo-1.png"
+            img = "img_jogos/star-3.png"
+        elseif  (timeProgress:getProgress() >= 0.25 and acertos ==  totalRespostas ) then
+            calculo = 70 + (100 / (130.61 * timeProgress:getProgress()))
+            imgFundo = "img_jogos/fimJogo-2.png"
+            img = "img_jogos/star-2.png"
+        elseif  (timeProgress:getProgress() > 0.00 and acertos ==  totalRespostas ) then
+            calculo = 55 + (100 / (162.5 * timeProgress:getProgress()))
+            imgFundo = "img_jogos/fimJogo-3.png"
+            img = "img_jogos/star-1.png"
+        end 
+        
+        acertos = tonumber(string.format("%." .. (1 or 0) .. "f", calculo))
+
+        insertPointSO(acertos)
+
+        vitoria = display.newImageRect( imgFundo, 250, 350)
+        vitoria.x = display.contentCenterX
+        vitoria.y = display.contentCenterY
+        SceneGroup:insert(vitoria)
+
+        star = display.newImageRect( img, 209.33, 83.66)
+        star.x = display.contentCenterX
+        star.y = display.contentCenterY * 0.7
+        SceneGroup:insert(star)
+
+        skull = display.newImageRect( "img_jogos/teste.png", 100, 81.5)
+        skull.x = display.contentCenterX
+        skull.y = display.contentCenterY * 1.08
+        SceneGroup:insert(skull)
+
+
+        if (acertos > 0) then
+
+            local repetir = widget.newButton({
+                left = 120,
+                top = 310,   
+                label = "Repetir",
+                shape = "roundedRect",
+                width = 80,
+                height = 30,
+                cornerRadius = 6,
+                labelColor = { default={ragdogLib.convertHexToRGB("#2e435e")}, over={ ragdogLib.convertHexToRGB("#2e435e") } },
+                fillColor = { default={ragdogLib.convertHexToRGB("#fbcc02")}, over={ragdogLib.convertHexToRGB("#f7d804")} },
+                strokeColor = { default={1,0,0,1}, over={0.8,0.8,1,1} },
+                strokeWidth = 0,
+                onEvent = repetirJogo        
+            })
+
+            repetir.x = display.contentCenterX * 0.7
+            repetir.y = display.contentCenterY*1.55
+            SceneGroup:insert(repetir)
+
+            local proximo = widget.newButton({
+                left = 120,
+                top = 310,   
+                label = "Próximo",
+                shape = "roundedRect",
+                width = 80,
+                height = 30,
+                cornerRadius = 6,
+                labelColor = { default={ragdogLib.convertHexToRGB("#2e435e")}, over={ ragdogLib.convertHexToRGB("#2e435e") } },
+                fillColor = { default={ragdogLib.convertHexToRGB("#fbcc02")}, over={ragdogLib.convertHexToRGB("#f7d804")} },
+                strokeColor = { default={1,0,0,1}, over={0.8,0.8,1,1} },
+                strokeWidth = 0,
+                onEvent = novoJogo        
+            })
+
+
+            proximo.x = display.contentCenterX * 1.3
+            proximo.y = display.contentCenterY*1.55
+            SceneGroup:insert(proximo)
+        else        
+            local jogarNovamente = widget.newButton({
+                left = 120,
+                top = 310,   
+                label = "Jogar Novamente",
+                shape = "roundedRect",
+                width = 150,
+                height = 30,
+                cornerRadius = 6,
+                labelColor = { default={ragdogLib.convertHexToRGB("#2e435e")}, over={ ragdogLib.convertHexToRGB("#2e435e") } },
+                fillColor = { default={ragdogLib.convertHexToRGB("#fbcc02")}, over={ragdogLib.convertHexToRGB("#f7d804")} },
+                strokeColor = { default={1,0,0,1}, over={0.8,0.8,1,1} },
+                strokeWidth = 0,
+                onEvent = repetirJogo        
+            })
+
+            jogarNovamente.x = display.contentCenterX
+            jogarNovamente.y = display.contentCenterY*1.55
+            SceneGroup:insert(jogarNovamente)
+        end
+
+        scoreFinal = display.newText(acertos, 300, 200, native.systemFont, 26)
+        scoreFinal.x = display.contentCenterX *1.25
+        scoreFinal.y = display.contentCenterY * 1.36
+        SceneGroup:insert(scoreFinal)
+    end
+end
+
+function gameOver()
+        fimJogo = 1
 
         SceneGroup:insert(groupOpRes)
 
         SceneGroup:insert(groupSelecionado)
-    --end
-    
-    imgFundo = "img_jogos/fimJogo-3.png"
-    img = "img_jogos/star-0.png"
-
-
-    if (timeProgress:getProgress() >= 0.50 and acertos == totalRespostas ) then
-        acertos = 85 + (100 / (130 * timeProgress:getProgress()))
-
-        imgFundo = "img_jogos/fimJogo-1.png"
-        img = "img_jogos/star-3.png"
-    elseif  (timeProgress:getProgress() >= 0.25 and acertos ==  totalRespostas ) then
-        acertos = 70 + (100 / (130.61 * timeProgress:getProgress()))
-
-        imgFundo = "img_jogos/fimJogo-2.png"
-        img = "img_jogos/star-2.png"
-    elseif  (timeProgress:getProgress() > 0 and acertos ==  totalRespostas ) then
-        acertos = 55 + (100 / (162.5 * timeProgress:getProgress()))
-
-        imgFundo = "img_jogos/fimJogo-3.png"
-        img = "img_jogos/star-1.png"
-    elseif  (timeProgress:getProgress() == 0 ) then
-        acertos = 0
+        
+        calculo = 0
 
         imgFundo = "img_jogos/fimJogo-3.png"
         img = "img_jogos/star-0.png"
-    end 
-    print (timeProgress:getProgress())
-    acertos = tonumber(string.format("%." .. (1 or 0) .. "f", acertos))
+        
+        acertos = tonumber(string.format("%." .. (1 or 0) .. "f", calculo))
 
-    insertPointSO(acertos)
+        insertPointSO(acertos)
 
-    vitoria = display.newImageRect( imgFundo, 250, 350)
-    vitoria.x = display.contentCenterX
-    vitoria.y = display.contentCenterY
-    SceneGroup:insert(vitoria)
+        vitoria = display.newImageRect( imgFundo, 250, 350)
+        vitoria.x = display.contentCenterX
+        vitoria.y = display.contentCenterY
+        SceneGroup:insert(vitoria)
 
-    star = display.newImageRect( img, 209.33, 83.66)
-    star.x = display.contentCenterX
-    star.y = display.contentCenterY * 0.7
-    SceneGroup:insert(star)
+        star = display.newImageRect( img, 209.33, 83.66)
+        star.x = display.contentCenterX
+        star.y = display.contentCenterY * 0.7
+        SceneGroup:insert(star)
 
-    skull = display.newImageRect( "img_jogos/teste.png", 100, 81.5)
-    skull.x = display.contentCenterX
-    skull.y = display.contentCenterY * 1.08
-    SceneGroup:insert(skull)
+        skull = display.newImageRect( "img_jogos/teste.png", 100, 81.5)
+        skull.x = display.contentCenterX
+        skull.y = display.contentCenterY * 1.08
+        SceneGroup:insert(skull)
 
-
-    if (acertos > 0) then
-
-        local repetir = widget.newButton({
-            left = 120,
-            top = 310,   
-            label = "Repetir",
-            shape = "roundedRect",
-            width = 80,
-            height = 30,
-            cornerRadius = 6,
-            labelColor = { default={ragdogLib.convertHexToRGB("#2e435e")}, over={ ragdogLib.convertHexToRGB("#2e435e") } },
-            fillColor = { default={ragdogLib.convertHexToRGB("#fbcc02")}, over={ragdogLib.convertHexToRGB("#f7d804")} },
-            strokeColor = { default={1,0,0,1}, over={0.8,0.8,1,1} },
-            strokeWidth = 0,
-            onEvent = repetirJogo        
-        })
-
-        repetir.x = display.contentCenterX * 0.7
-        repetir.y = display.contentCenterY*1.55
-        SceneGroup:insert(repetir)
-
-        local proximo = widget.newButton({
-            left = 120,
-            top = 310,   
-            label = "Próximo",
-            shape = "roundedRect",
-            width = 80,
-            height = 30,
-            cornerRadius = 6,
-            labelColor = { default={ragdogLib.convertHexToRGB("#2e435e")}, over={ ragdogLib.convertHexToRGB("#2e435e") } },
-            fillColor = { default={ragdogLib.convertHexToRGB("#fbcc02")}, over={ragdogLib.convertHexToRGB("#f7d804")} },
-            strokeColor = { default={1,0,0,1}, over={0.8,0.8,1,1} },
-            strokeWidth = 0,
-            onEvent = novoJogo        
-        })
-
-
-        proximo.x = display.contentCenterX * 1.3
-        proximo.y = display.contentCenterY*1.55
-        SceneGroup:insert(proximo)
-    else        
+      
         local jogarNovamente = widget.newButton({
             left = 120,
             top = 310,   
@@ -364,13 +418,12 @@ function telaFimJogo()
         jogarNovamente.x = display.contentCenterX
         jogarNovamente.y = display.contentCenterY*1.55
         SceneGroup:insert(jogarNovamente)
-    end
+        
 
-    scoreFinal = display.newText(acertos, 300, 200, native.systemFont, 26)
-    scoreFinal.x = display.contentCenterX *1.25
-    scoreFinal.y = display.contentCenterY * 1.36
-    SceneGroup:insert(scoreFinal)
-
+        scoreFinal = display.newText(acertos, 300, 200, native.systemFont, 26)
+        scoreFinal.x = display.contentCenterX *1.25
+        scoreFinal.y = display.contentCenterY * 1.36
+        SceneGroup:insert(scoreFinal)
 end
 
 function repetirJogo(event)
@@ -391,11 +444,32 @@ function repetirJogo(event)
     end
 end
 
+function novoJogo(event)
+    if (event.phase == "ended") then
+        if (qnt_fases_d == nivel) then
+            qnt_fases_d = qnt_fases_d + 1
+        end
+        local options =
+            {
+                effect = "slideLeft",
+                time = 300,
+                params = {
+                    jogo = "somaOssos",
+                    nivel = nivel + 1,
+                    qnt_fases_d = qnt_fases_d
+                }
+            }
+
+            faseJogo = nomeJogo..".fase1"
+            composer.gotoScene(faseJogo, options)
+    end
+end
+
 function faseUm:show(event)
     if (event.phase == "will") then
         SceneGroup = self.view
 
-
+        print("tese")
         groupSelecionado = display.newGroup()
 
 
@@ -406,7 +480,7 @@ function faseUm:show(event)
 
         respostaCorreta = {}
 
-        for row in db:nrows("SELECT qnt_respostas, dica, resposta1, resposta2, resposta3, img_pergunta FROM fases_quebra_ossos where num_fase = '"..nivel.."'") do
+        for row in db:nrows("SELECT qnt_respostas, dica, resposta1, resposta2, resposta3, img_pergunta FROM fases_soma_ossos where num_fase = '"..nivel.."'") do
             totalRespostas = row.qnt_respostas
             dica = row.dica
             respostaCorreta[1] = row.resposta1
@@ -431,7 +505,7 @@ function faseUm:show(event)
         timeProgress = widget.newProgressView
         {
             left = -13,
-            top = -6,
+            top = -8,
             width = display.contentCenterX * 2.083,
             isAnimated = true
         }
