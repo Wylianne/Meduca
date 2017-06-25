@@ -257,10 +257,10 @@ function telaFimJogo(event)
 
         fimJogo = 1
 
-            SceneGroup:insert(groupOpRes)
+        SceneGroup:insert(groupOpRes)
+        SceneGroup:insert(groupSelecionado)
 
-            SceneGroup:insert(groupSelecionado)
-        --end
+        
         calculo = 0
 
             imgFundo = "img_jogos/fimJogo-3.png"
@@ -302,64 +302,20 @@ function telaFimJogo(event)
 
         if (acertos > 0) then
 
-            local repetir = widget.newButton({
-                left = 120,
-                top = 310,   
-                label = "Repetir",
-                shape = "roundedRect",
-                width = 80,
-                height = 30,
-                cornerRadius = 6,
-                labelColor = { default={ragdogLib.convertHexToRGB("#2e435e")}, over={ ragdogLib.convertHexToRGB("#2e435e") } },
-                fillColor = { default={ragdogLib.convertHexToRGB("#fbcc02")}, over={ragdogLib.convertHexToRGB("#f7d804")} },
-                strokeColor = { default={1,0,0,1}, over={0.8,0.8,1,1} },
-                strokeWidth = 0,
-                onEvent = repetirJogo        
-            })
-
             repetir.x = display.contentCenterX * 0.7
             repetir.y = display.contentCenterY*1.55
-            SceneGroup:insert(repetir)
-
-            local proximo = widget.newButton({
-                left = 120,
-                top = 310,   
-                label = "Próximo",
-                shape = "roundedRect",
-                width = 80,
-                height = 30,
-                cornerRadius = 6,
-                labelColor = { default={ragdogLib.convertHexToRGB("#2e435e")}, over={ ragdogLib.convertHexToRGB("#2e435e") } },
-                fillColor = { default={ragdogLib.convertHexToRGB("#fbcc02")}, over={ragdogLib.convertHexToRGB("#f7d804")} },
-                strokeColor = { default={1,0,0,1}, over={0.8,0.8,1,1} },
-                strokeWidth = 0,
-                onEvent = novoJogo        
-            })
-
 
             proximo.x = display.contentCenterX * 1.3
             proximo.y = display.contentCenterY*1.55
-            SceneGroup:insert(proximo)
         else        
-            local jogarNovamente = widget.newButton({
-                left = 120,
-                top = 310,   
-                label = "Jogar Novamente",
-                shape = "roundedRect",
-                width = 150,
-                height = 30,
-                cornerRadius = 6,
-                labelColor = { default={ragdogLib.convertHexToRGB("#2e435e")}, over={ ragdogLib.convertHexToRGB("#2e435e") } },
-                fillColor = { default={ragdogLib.convertHexToRGB("#fbcc02")}, over={ragdogLib.convertHexToRGB("#f7d804")} },
-                strokeColor = { default={1,0,0,1}, over={0.8,0.8,1,1} },
-                strokeWidth = 0,
-                onEvent = repetirJogo        
-            })
-
             jogarNovamente.x = display.contentCenterX
             jogarNovamente.y = display.contentCenterY*1.55
-            SceneGroup:insert(jogarNovamente)
         end
+
+        
+        SceneGroup:insert(jogarNovamente)
+        SceneGroup:insert(proximo)
+        SceneGroup:insert(repetir)
 
         scoreFinal = display.newText(acertos, 300, 200, native.systemFont, 26)
         scoreFinal.x = display.contentCenterX *1.25
@@ -375,19 +331,20 @@ function gameOver()
 
         SceneGroup:insert(groupSelecionado)
         
+        SceneGroup:insert(vitoria)
+
+        SceneGroup:insert(jogarNovamenteGO)
         calculo = 0
 
-        imgFundo = "img_jogos/fimJogo-3.png"
         img = "img_jogos/star-0.png"
         
         acertos = tonumber(string.format("%." .. (1 or 0) .. "f", calculo))
 
         insertPointSO(acertos)
 
-        vitoria = display.newImageRect( imgFundo, 250, 350)
         vitoria.x = display.contentCenterX
         vitoria.y = display.contentCenterY
-        SceneGroup:insert(vitoria)
+        
 
         star = display.newImageRect( img, 209.33, 83.66)
         star.x = display.contentCenterX
@@ -399,25 +356,8 @@ function gameOver()
         skull.y = display.contentCenterY * 1.08
         SceneGroup:insert(skull)
 
-      
-        local jogarNovamente = widget.newButton({
-            left = 120,
-            top = 310,   
-            label = "Jogar Novamente",
-            shape = "roundedRect",
-            width = 150,
-            height = 30,
-            cornerRadius = 6,
-            labelColor = { default={ragdogLib.convertHexToRGB("#2e435e")}, over={ ragdogLib.convertHexToRGB("#2e435e") } },
-            fillColor = { default={ragdogLib.convertHexToRGB("#fbcc02")}, over={ragdogLib.convertHexToRGB("#f7d804")} },
-            strokeColor = { default={1,0,0,1}, over={0.8,0.8,1,1} },
-            strokeWidth = 0,
-            onEvent = repetirJogo        
-        })
-
-        jogarNovamente.x = display.contentCenterX
-        jogarNovamente.y = display.contentCenterY*1.55
-        SceneGroup:insert(jogarNovamente)
+        jogarNovamenteGO.x = display.contentCenterX
+        jogarNovamenteGO.y = display.contentCenterY*1.55
         
 
         scoreFinal = display.newText(acertos, 300, 200, native.systemFont, 26)
@@ -426,8 +366,16 @@ function gameOver()
         SceneGroup:insert(scoreFinal)
 end
 
+function resetaButtons()
+    jogarNovamenteGO.x = 1000
+    jogarNovamente.x = 1000
+    proximo.x = 1000
+    repetir.x = 1000
+end
+
 function repetirJogo(event)
     if (event.phase == "ended") then
+        resetaButtons()
         local options =
             {
                 effect = "slideLeft",
@@ -446,6 +394,7 @@ end
 
 function novoJogo(event)
     if (event.phase == "ended") then
+        resetaButtons()
         if (qnt_fases_d == nivel) then
             qnt_fases_d = qnt_fases_d + 1
         end
@@ -463,6 +412,78 @@ function novoJogo(event)
             faseJogo = nomeJogo..".fase1"
             composer.gotoScene(faseJogo, options)
     end
+end
+
+function geraButtonsFJ()
+
+        imgFundo = "img_jogos/fimJogo-3.png"
+        vitoria = display.newImageRect( imgFundo, 250, 350)
+        vitoria.x = 1000        
+
+        jogarNovamenteGO = widget.newButton({
+            left = 120,
+            top = 310,   
+            label = "Jogar Novamente",
+            shape = "roundedRect",
+            width = 150,
+            height = 30,
+            cornerRadius = 6,
+            labelColor = { default={ragdogLib.convertHexToRGB("#2e435e")}, over={ ragdogLib.convertHexToRGB("#2e435e") } },
+            fillColor = { default={ragdogLib.convertHexToRGB("#fbcc02")}, over={ragdogLib.convertHexToRGB("#f7d804")} },
+            strokeColor = { default={1,0,0,1}, over={0.8,0.8,1,1} },
+            strokeWidth = 0,
+            onEvent = repetirJogo        
+        })
+
+        jogarNovamente = widget.newButton({
+            left = 120,
+            top = 310,   
+            label = "Jogar Novamente",
+            shape = "roundedRect",
+            width = 150,
+            height = 30,
+            cornerRadius = 6,
+            labelColor = { default={ragdogLib.convertHexToRGB("#2e435e")}, over={ ragdogLib.convertHexToRGB("#2e435e") } },
+            fillColor = { default={ragdogLib.convertHexToRGB("#fbcc02")}, over={ragdogLib.convertHexToRGB("#f7d804")} },
+            strokeColor = { default={1,0,0,1}, over={0.8,0.8,1,1} },
+            strokeWidth = 0,
+            onEvent = repetirJogo        
+        })
+
+        proximo = widget.newButton({
+            left = 120,
+            top = 310,   
+            label = "Próximo",
+            shape = "roundedRect",
+            width = 80,
+            height = 30,
+            cornerRadius = 6,
+            labelColor = { default={ragdogLib.convertHexToRGB("#2e435e")}, over={ ragdogLib.convertHexToRGB("#2e435e") } },
+            fillColor = { default={ragdogLib.convertHexToRGB("#fbcc02")}, over={ragdogLib.convertHexToRGB("#f7d804")} },
+            strokeColor = { default={1,0,0,1}, over={0.8,0.8,1,1} },
+            strokeWidth = 0,
+            onEvent = novoJogo        
+        })
+
+        repetir = widget.newButton({
+            left = 120,
+            top = 310,   
+            label = "Repetir",
+            shape = "roundedRect",
+            width = 80,
+            height = 30,
+            cornerRadius = 6,
+            labelColor = { default={ragdogLib.convertHexToRGB("#2e435e")}, over={ ragdogLib.convertHexToRGB("#2e435e") } },
+            fillColor = { default={ragdogLib.convertHexToRGB("#fbcc02")}, over={ragdogLib.convertHexToRGB("#f7d804")} },
+            strokeColor = { default={1,0,0,1}, over={0.8,0.8,1,1} },
+            strokeWidth = 0,
+            onEvent = repetirJogo        
+        })
+
+        jogarNovamenteGO.x = 1000
+        jogarNovamente.x = 1000
+        proximo.x = 1000
+        repetir.x = 1000
 end
 
 function faseUm:show(event)
@@ -557,6 +578,7 @@ function faseUm:show(event)
 
 
         timer.performWithDelay( 1000, changeTime )
+        geraButtonsFJ()
     end
 end
 
