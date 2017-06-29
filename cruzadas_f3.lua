@@ -5,22 +5,22 @@ local composer =  require("composer")
 local cruzadas = require( "cruzadas" )
 
 
-local cruzadasF2 = composer.newScene()
+local cruzadasF3 = composer.newScene()
 
 
    
-function cruzadasF2:create(event)
+function cruzadasF3:create(event)
     SceneGroup = self.view
     
     local grid = {
-              {" "," "," ","C"," "," "," "," "},
-              {"F","E","M","U","R"," "," "," "},
-              {" "," "," ","B"," "," "," "," "},
-              {" "," "," ","O"," "," "," "," "},
-              {"T","I","B","I","A"," "," "," "},
-              {" "," "," ","D"," "," "," "," "},
-              {" "," "," ","E"," "," "," "," "},
-              {" "," "," "," "," "," "," "," "},
+              {"R","A","D","I","O"," "," "," "},
+              {" "," "," "," ","M"," "," "," "},
+              {"U","M","E","R","O"," "," "," "},
+              {" "," "," "," ","P"," "," "," "},
+              {" "," "," "," ","L"," "," "," "},
+              {" "," "," "," ","A"," "," "," "},
+              {" "," "," "," ","T"," "," "," "},
+              {" "," "," "," ","A"," "," "," "},
   }
   
 local dicasDownP = {
@@ -56,18 +56,18 @@ local setasP = {
               {" "," "," "," "," "," "," "," "},
   }
 
-      dicasRightP[2][1] = "Maior osso do corpo humano"
-      dicasDownP[1][4] = "Osso do pé (figura geométrica)"
-      dicasRightP[5][1] = "Osso da perna (jogo online)"
+      dicasRightP[1][1] = "Osso do braço (música)"
+      dicasRightP[3][1] = "Mais longo osso do membro superior"
+      dicasDownP[1][5] = "Semelhante a uma pá"
 
       -- aceita down; right; righdown
-      setasP[2][1] = "right"
-      setasP[1][4] = "down"
-      setasP[5][1] = "right"
+      setasP[1][1] = "right"
+      setasP[3][1] = "right"
+      setasP[1][5] = "down"
      
       
       
-      local jogo = {palavras = grid, setas = setasP, dicasDown = dicasDownP ,dicasRight = dicasRightP,proximaFase= "cruzadas_f3"}
+      local jogo = {palavras = grid, setas = setasP, dicasDown = dicasDownP ,dicasRight = dicasRightP,proximaFase= nil}
       
       SceneGroup:insert(cruzadas:create(jogo))
     
@@ -75,7 +75,7 @@ local setasP = {
 end
 
 
-function cruzadasF2:hide(event)
+function cruzadasF3:hide(event)
    if event.phase == "did" then
       self.view = nil
    end
@@ -83,8 +83,8 @@ function cruzadasF2:hide(event)
 end
 
 
-cruzadasF2:addEventListener("hide", cruzadasF2)
+cruzadasF3:addEventListener("hide", cruzadasF3)
 
-cruzadasF2:addEventListener("create", cruzadasF2)
+cruzadasF3:addEventListener("create", cruzadasF3)
 
-return cruzadasF2
+return cruzadasF3

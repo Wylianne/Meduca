@@ -67,7 +67,7 @@ local setasP = {
      
       
       
-      local jogo = {palavras = grid, setas = setasP, dicasDown = dicasDownP ,dicasRight = dicasRightP}
+      local jogo = {palavras = grid, setas = setasP, dicasDown = dicasDownP ,dicasRight = dicasRightP,proximaFase= "cruzadas_f2"}
       
       SceneGroup:insert(cruzadas:create(jogo))
     
