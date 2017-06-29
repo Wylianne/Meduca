@@ -4,21 +4,9 @@ local composer =  require("composer")
 
 local login = composer.newScene()
 
-local function removeObjectsOfScena ()
-    fieldPass:removeSelf()
-    fieldLogin:removeSelf()
-end
-
-function viewFieldsEvent(event)
-
+function gotoMenu(event)
     if ( "ended" == event.phase ) then
-        if (fieldLogin.text=="admin" and fieldPass.text=="admin") then
-            --removeObjectsOfScena()
-            composer.gotoScene( "menuPrincipal" )        
-        else
-            native.showAlert("Aviso","Login e/ou senha incorreto(s)")
-        end
-        
+        composer.gotoScene( "menuPrincipal" )          
     end
 end
 
@@ -35,23 +23,6 @@ local function moveScene()
 
     timer.performWithDelay( 30000, moveScene )
 
-end
-
-function criaInputs()
-        
-    fieldLogin = native.newTextField( display.actualContentWidth/2, 
-                                300 , 
-                                180,
-                                20 )
-
-
-    fieldPass =  native.newTextField( display.actualContentWidth/2, 
-                                    330, 
-                                    180, 
-                                    20 )
-
-    fieldPass.isSecure = true
-    
 end
 
 function login:create(event)
@@ -71,67 +42,45 @@ function login:create(event)
 
     
     moveScene()
+    local buttonData = { width=114, height=45, numFrames=4, sheetContentWidth=114, sheetContentHeight=180 }
+    local button = graphics.newImageSheet( "tela_login/jogarSprite.png", buttonData )
+    local sequenceData = {name="seq1", sheet=button, start=1, count=4, time=600, loopCount=100000 }
 
-    criaInputs()
 
-    local widget = require( "widget" )
+    buttonAnimation = display.newSprite( button, sequenceData )
+    buttonAnimation.width = 100
+    buttonAnimation.x = display.contentCenterX
+    buttonAnimation.y = display.contentCenterY * 1.45
+    buttonAnimation:addEventListener("touch", gotoMenu)
+    SceneGroup:insert(buttonAnimation)
+    buttonAnimation:play()
 
-    local btnLogin = widget.newButton({
-        left = 120,
-        top = 310,   
-        label = "Entrar",
-        shape = "roundedRect",
-        width = 90,
-        height = 25,
-        cornerRadius = 0,
-        labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 0, 0.5 } },
-        fillColor = { default={0,0.4,1,1}, over={0,0.2,0.9,1} },
-        strokeColor = { default={1,0,0,1}, over={0.8,0.8,1,1} },
-        strokeWidth = 0,
-            onEvent = viewFieldsEvent
-        
-    })
-    btnLogin.x = display.contentCenterX
-    btnLogin.y = display.contentCenterY*1.6
-    SceneGroup:insert(btnLogin)
+
+    local buttonDataFC = { width=108, height=35, numFrames=6, sheetContentWidth=108, sheetContentHeight=210 }
+    local buttonFC = graphics.newImageSheet( "tela_login/fcSprite.png", buttonDataFC )
+    local sequenceDataFC = {name="seq1", sheet=buttonFC, start=1, count=6, time=900, loopCount=100000 }
+
+
+    buttonAnimationFC = display.newSprite( buttonFC, sequenceDataFC )
+    buttonAnimationFC.width = 100
+    buttonAnimationFC.x = display.contentCenterX
+    buttonAnimationFC.y = display.contentCenterY * 1.65
+    --buttonAnimationFC:addEventListener("touch", gotoMenu)
+    SceneGroup:insert(buttonAnimationFC)
+    buttonAnimationFC:play()
     
 
-    textLoginWith = display.newText("Entrar com", display.contentCenterX, display.contentCenterY * 1.8 )
-    textLoginWith:setFillColor(0,0,0)
-    SceneGroup:insert(textLoginWith)
 
-    loginFacebook = display.newImageRect("tela_login/facebook.png", 40, 40)
-    loginFacebook.x = display.contentCenterX - display.contentCenterX / 2 
-    loginFacebook.y = display.contentCenterY * 2
-    SceneGroup:insert(loginFacebook)
-
-
-    loginGoogle = display.newImageRect("tela_login/google.png", 40, 40)
-    loginGoogle.x = display.contentCenterX
-    loginGoogle.y = display.contentCenterY * 2
-    SceneGroup:insert(loginGoogle)
-
-    loginTwitter = display.newImageRect("tela_login/twitter.png", 45, 40)
-    loginTwitter.x = display.contentCenterX + display.contentCenterX / 2 
-    loginTwitter.y = display.contentCenterY * 2
-    SceneGroup:insert(loginTwitter)
 end
 
 function login:show(event)
     if (event.phase == "did" ) then
-        fieldLogin.isVisible = true
-        fieldPass.isVisible = true
-        
-        fieldLogin.text = ""
-        fieldPass.text = ""
 
     end
 end 
 
 function login:hide(event)
   if (event.phase == "did") then
-    fieldLogin.isVisible = false
-    fieldPass.isVisible = false
   end  
 end
 
