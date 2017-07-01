@@ -6,6 +6,8 @@ local quebraOssos = composer.newScene()
 
 local slide = require("slide_menu")
 
+local calcUtils = require("calcUtils")
+
 local ragdogLib = require "ragdogLib";
 
 local widget = require("widget")
@@ -152,14 +154,20 @@ function valida(letra)
         changeScore("letra")
     end
 end
+--function calcScore(scorePoint)
+
+  --  if (tonumber(scorePoint) == 16) then
+  --      return "0"
+   -- elseif (tonumber(scorePoint) > 0) then
+   --     return tonumber(scorePoint) - 12
+       
+   -- end
+  
+
+--end
 
 function changeScore (tipo)
-    if (tonumber(scorePoint.text) == 16) then
-        scorePoint.text = "0"
-    elseif (tonumber(scorePoint.text) > 0) then
-        scorePoint.text = tonumber(scorePoint.text) - 12
-       
-    end
+    scorePoint.text = calcUtils.score(scorePoint.text)
 
     if (tipo == "letra") then
         geraEsqueleto()
