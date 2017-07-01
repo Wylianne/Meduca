@@ -53,7 +53,7 @@ Runtime:addEventListener( "system", onSystemEvent )
 native.setProperty( "androidSystemUiVisibility", "immersiveSticky" )
 
 local composer = require( "composer" )
-composer.gotoScene( "login" )
+--composer.gotoScene( "login" )
 --composer.gotoScene( "menuPrincipal" )
---composer.gotoScene( "quiz" )
+composer.gotoScene( "quiz" )
 

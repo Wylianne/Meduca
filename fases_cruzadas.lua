@@ -10,10 +10,8 @@ function fasesCruzadas:create(event)
     
     itens = {
             {status=1, scene = "cruzadas_f1"}, {status=1, scene = "cruzadas_f2"},
-            {status=0, scene = ""},
-            {status=0, scene = ""}, {status=0, scene = ""},{status=0, scene = ""},
-            {status=0, scene = ""}, {status=0, scene = ""},{status=0, scene = ""},
-            {status=0, scene = ""}, {status=0, scene = ""},{status=0, scene = ""},
+            {status=1, scene = "cruzadas_f3"}
+           
     }
     
     --itens = {}

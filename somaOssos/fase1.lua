@@ -206,7 +206,9 @@ function viewHelp( event )
 end
 
 function selecionado( event )
+  print("Selecionado! Fase "..event.phase)
     if (event.phase == "ended") then
+      
         if (iResposta <= totalRespostas) then
 
             groupSelecionado:insert(event.target)

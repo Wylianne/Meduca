@@ -50,7 +50,7 @@ function gerarFases()
     yFaseF = 60
     cont = 0
 
-    for i=1, 12, 1 do
+    for i=1, #itens, 1 do
         --+110
         if (i == 4) then
             yFaseB = 180

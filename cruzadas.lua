@@ -70,6 +70,10 @@ function cruzadas:create(jogoP)
     
     jogo = jogoP
     
+    
+    
+    
+    
     cruzadasGroup:insert(mainLayout:create("Palavras Cruzadas"))
     
     local dicaQuadro = display.newRect(0,10,display.actualContentWidth*2, 50)
@@ -166,6 +170,49 @@ function createVerificaButton()
            onEvent=verificaJogo
      })
  end 
+ 
+ function createJogarNovamenteButton()
+     return widget.newButton({
+           left = 5,
+           top = 0, 
+           label = "Jogar Novamente",
+           shape = "roundedRect",
+           width = 160,
+           height = 25,
+           cornerRadius = 0,
+           labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 0, 0.5 } },
+           fillColor = { default={1,0,0,1}, over={1,0,0,0.8} },
+           strokeColor = { default={1,0,0,1}, over={1,0,0,0.8} },
+           strokeWidth = 5,
+           onEvent=verificaJogo
+     })
+ end 
+ 
+ function createProximaFaseButton()
+     return widget.newButton({
+           left = 210,
+           top = 0, 
+           label = "Próxima",
+           shape = "roundedRect",
+           width = 90,
+           height = 25,
+           cornerRadius = 0,
+           labelColor = { default={ 1, 1, 1 }, over={ 0, 0, 0, 0.5 } },
+           fillColor = { default={1,0,0,1}, over={1,0,0,0.8} },
+           strokeColor = { default={1,0,0,1}, over={1,0,0,0.8} },
+           strokeWidth = 5,
+           onEvent=goProximaFase
+     })
+ end 
+ 
+ function goProximaFase(event)
+   if event.phase=='ended' then
+     if jogo.proximaFase~=nil then
+       composer.gotoScene(jogo.proximaFase)
+     end
+   end
+ end
+ 
 
 function createDica(texto)
   
@@ -215,6 +262,8 @@ for i=1, 8, 1 do
   end
   
   event.target:setEnabled(false)
+  
+  telaFimJogo()
 end
     
 end
@@ -317,6 +366,18 @@ function clickPiece (event)
      end
  end
 
+function telaFimJogo()
+    
+       local fimQuadro = display.newRect(0,10,display.actualContentWidth*2, 50)
+       fimQuadro:setFillColor(1,1,1)
+    
+       cruzadasGroup:insert(fimQuadro)
+       
+       local btproximaFase = createProximaFaseButton()
+  
+       cruzadasGroup:insert(btproximaFase)
+    
+end
 
 
 function  montaAlfabeto()
