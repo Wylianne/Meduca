@@ -10,7 +10,7 @@ function verificaBD()
     end
 
     if (id_pergunta == 0) then
-    	local tablefill = [[INSERT INTO fases VALUES (1,'somaOssos',3,1);]]
+    	local tablefill = [[INSERT INTO fases VALUES (1,'somaOssos',2,1);]]
    		db:exec( tablefill )
     end
 
